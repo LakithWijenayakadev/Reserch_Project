@@ -124,6 +124,8 @@
                 <input id="password" name="password" type="password" required />
             </div>
             <button type="submit">Login</button>
+            <button type="button" id="quickLogin" style="background: #28a745; margin-top: 5px;">Quick Login
+                (student1)</button>
 
             {% if error %}
             <div class="error-message">{{ error }}</div>
@@ -137,8 +139,24 @@
                 <li><strong>student2</strong> / password2</li>
                 <li><strong>admin</strong> / admin123</li>
             </ul>
+            <p style="margin-top: 10px; font-size: 12px; color: #28a745;">
+                <strong>Auto-filled for testing:</strong> student1 / password1
+            </p>
         </div>
     </div>
+
+    <script>
+        // Auto-fill credentials for testing
+        document.addEventListener('DOMContentLoaded', function () {
+            document.getElementById('username').value = 'student1';
+            document.getElementById('password').value = 'password1';
+
+            // Quick login button functionality
+            document.getElementById('quickLogin').addEventListener('click', function () {
+                document.querySelector('.login-form').submit();
+            });
+        });
+    </script>
 </body>
 
 </html>
