@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, jsonify, session, redirect, url_for
-import cv2, numpy as np, base64, os, json
+import cv2, numpy as np, base64, os, json, time
 from datetime import datetime
 
 app = Flask(__name__)
@@ -12,17 +12,27 @@ users = {
     'admin':    {'password': 'admin123',  'name': 'Administrator', 'role': 'admin'}
 }
 
-# --- Persistent detection store ---
+# --- Persistent data stores ---
 detection_history = {}
+exams_data = {}
+exam_sessions = {}
 
-def load_detection_data():
-    global detection_history
+def load_data():
+    global detection_history, exams_data, exam_sessions
     try:
         if os.path.exists('detection_data.json'):
             with open('detection_data.json', 'r') as f:
                 detection_history = json.load(f)
+        if os.path.exists('exams_data.json'):
+            with open('exams_data.json', 'r') as f:
+                exams_data = json.load(f)
+        if os.path.exists('exam_sessions.json'):
+            with open('exam_sessions.json', 'r') as f:
+                exam_sessions = json.load(f)
     except Exception:
         detection_history = {}
+        exams_data = {}
+        exam_sessions = {}
 
 def save_detection_data():
     try:
@@ -31,7 +41,21 @@ def save_detection_data():
     except Exception:
         pass
 
-load_detection_data()
+def save_exams_data():
+    try:
+        with open('exams_data.json', 'w') as f:
+            json.dump(exams_data, f, indent=2)
+    except Exception:
+        pass
+
+def save_exam_sessions():
+    try:
+        with open('exam_sessions.json', 'w') as f:
+            json.dump(exam_sessions, f, indent=2)
+    except Exception:
+        pass
+
+load_data()
 
 def ensure_bucket(username: str):
     if username not in detection_history:
@@ -113,6 +137,10 @@ prev_frame = None
 last_face_detected = None
 absence_start_time = None
 
+# Alert cooldown system to prevent spam
+last_alert_time = {}
+alert_cooldown_seconds = 5  # 5 seconds cooldown per alert type
+
 def analyze_frame(image_bgr):
     """
     Returns one of: 'multiple_people', 'no_face', 'looking_away', 'blur_screen', 'none'
@@ -134,19 +162,16 @@ def analyze_frame(image_bgr):
 
     blur = laplacian_variance(gray)
     
-    # Use more lenient face detection parameters to catch partial faces
-    faces  = face_cascade.detectMultiScale(gray, 1.1, 3, minSize=(30, 30))
-    profs  = profile_cascade.detectMultiScale(gray, 1.1, 3, minSize=(30, 30))
+    # STRICT face detection for multiple people - only use frontal faces for multiple detection
+    # Use very strict parameters to avoid false positives
+    faces = face_cascade.detectMultiScale(gray, 1.3, 8, minSize=(80, 80), maxSize=(300, 300))
     
-    # Also try detecting faces at different scales for better coverage
-    faces_alt = face_cascade.detectMultiScale(gray, 1.05, 2, minSize=(20, 20))
-    profs_alt = profile_cascade.detectMultiScale(gray, 1.05, 2, minSize=(20, 20))
-    
-    # Combine all detections
-    allf = list(faces) + list(profs) + list(faces_alt) + list(profs_alt)
+    # For multiple people detection, ONLY use frontal faces (no profiles)
+    # Profiles will only be used later for "looking away" detection
+    allf = list(faces)
     filtered_faces = []
     
-    # Remove overlapping face detections (within 40% overlap - more lenient)
+    # VERY STRICT overlap filtering - remove any faces that are even slightly overlapping
     for i, face1 in enumerate(allf):
         is_duplicate = False
         for face2 in filtered_faces:
@@ -160,11 +185,27 @@ def analyze_frame(image_bgr):
             face1_area = w1 * h1
             face2_area = w2 * h2
             
-            if overlap_area > 0.4 * min(face1_area, face2_area):
+            # Much stricter overlap threshold - remove if any overlap > 10%
+            if overlap_area > 0.1 * min(face1_area, face2_area):
+                is_duplicate = True
+                break
+            
+            # Also check distance between centers - faces must be well separated
+            center1_x, center1_y = x1 + w1//2, y1 + h1//2
+            center2_x, center2_y = x2 + w2//2, y2 + h2//2
+            distance = ((center1_x - center2_x)**2 + (center1_y - center2_y)**2)**0.5
+            min_distance = max(w1, h1, w2, h2) * 1.2  # Faces must be at least 1.2x face size apart
+            
+            if distance < min_distance:
                 is_duplicate = True
                 break
         
         if not is_duplicate:
+            # Additional quality check - reject faces that are too small, too large, or near edges
+            x, y, w, h = face1
+            if (w < 80 or h < 80 or w > 300 or h > 300 or 
+                x < 20 or y < 20 or x + w > gray.shape[1] - 20 or y + h > gray.shape[0] - 20):
+                continue
             filtered_faces.append(face1)
     
     fcnt = len(filtered_faces)
@@ -206,11 +247,23 @@ def analyze_frame(image_bgr):
             decision = 'no_face'
             print(f"No face detected - person absent: brightness={mean_brightness:.1f}, contrast={std_brightness:.1f}, duration={absence_duration:.1f}s")
         elif movement_detected:
-            decision = 'looking_away'
-            print(f"No face but person moved away: brightness={mean_brightness:.1f}, movement={movement_score:.1f}")
+            # Check if we can detect profile faces (for looking away detection)
+            profs = profile_cascade.detectMultiScale(gray, 1.1, 3, minSize=(30, 30))
+            if len(profs) > 0:
+                decision = 'looking_away'
+                print(f"No face but profile detected (looking away): brightness={mean_brightness:.1f}, movement={movement_score:.1f}")
+            else:
+                decision = 'looking_away'
+                print(f"No face but person moved away: brightness={mean_brightness:.1f}, movement={movement_score:.1f}")
         else:
-            decision = 'looking_away'
-            print(f"No face but looking away detected: brightness={mean_brightness:.1f}, contrast={std_brightness:.1f}")
+            # Check if we can detect profile faces (for looking away detection)
+            profs = profile_cascade.detectMultiScale(gray, 1.1, 3, minSize=(30, 30))
+            if len(profs) > 0:
+                decision = 'looking_away'
+                print(f"No frontal face but profile detected (looking away): brightness={mean_brightness:.1f}, contrast={std_brightness:.1f}")
+            else:
+                decision = 'looking_away'
+                print(f"No face but looking away detected: brightness={mean_brightness:.1f}, contrast={std_brightness:.1f}")
     elif fcnt >= 2:
         # Face detected - reset absence tracking
         last_face_detected = current_time
@@ -293,24 +346,53 @@ def analyze():
         'sound_type': None,
         'screen_blurred': False
     }
+    
+    # Reset cooldowns only when face is properly detected (student is focused)
+    # This means alerts won't repeat until student actually fixes the issue
+    face_detected = decision == 'none'  # 'none' means face detected and everything is good
+    if face_detected:
+        # Clear cooldowns for this user to allow immediate alerts if issues return
+        keys_to_remove = [key for key in last_alert_time.keys() if key.startswith(f"{u}_")]
+        if keys_to_remove:
+            print(f"RESET: Face detected for {u}, clearing {len(keys_to_remove)} cooldowns")
+            for key in keys_to_remove:
+                del last_alert_time[key]
 
     if decision in ('looking_away','multiple_people','no_face','blur_screen'):
+        # Check cooldown to prevent spam alerts
+        current_time = time.time()
+        alert_key = f"{u}_{decision}"
+        
+        # Only alert if this type hasn't been alerted recently
+        # Alert will not repeat until face is properly detected (cooldown is reset)
+        should_alert = alert_key not in last_alert_time
+        
+        # Always increment detection count
         detection_history[u][decision] += 1
-        msg_map = {
-            'looking_away': 'Looking away from screen detected!',
-            'multiple_people': 'Multiple people detected!',
-            'no_face': 'No face detected!',
-            'blur_screen': 'Screen blur detected!'
-        }
-        detection_history[u]['alert_history'].append({
-            'timestamp': ts, 'type': decision, 'message': msg_map[decision]
-        })
-        save_detection_data()
+        
+        if should_alert:
+            # Update last alert time
+            last_alert_time[alert_key] = current_time
+            print(f"ALERT: {decision} - First time, sending alert to {u}")
+            
+            msg_map = {
+                'looking_away': 'Looking away from screen detected!',
+                'multiple_people': 'Multiple people detected!',
+                'no_face': 'No face detected!',
+                'blur_screen': 'Screen blur detected!'
+            }
+            detection_history[u]['alert_history'].append({
+                'timestamp': ts, 'type': decision, 'message': msg_map[decision]
+            })
+            save_detection_data()
 
-        resp.update(alert=True,
-                    message=msg_map[decision],
-                    sound_type=decision,
-                    screen_blurred=(decision=='blur_screen'))
+            resp.update(alert=True,
+                        message=msg_map[decision],
+                        sound_type=decision,
+                        screen_blurred=(decision=='blur_screen'))
+        else:
+            # If in cooldown, don't send alert but still count the detection
+            print(f"COOLDOWN: {decision} - Suppressing repeat alert for {u}")
 
     return jsonify(resp)
 
@@ -321,16 +403,224 @@ def tab_switch():
         return jsonify({'error':'Not authenticated'}), 401
     u = session['username']
     ensure_bucket(u)
+    
+    # Check cooldown to prevent spam alerts
+    current_time = time.time()
+    alert_key = f"{u}_tab_switching"
+    
+    # Only alert if this type hasn't been alerted recently
+    # Alert will not repeat until face is properly detected (cooldown is reset)
+    should_alert = alert_key not in last_alert_time
+    
+    # Always increment detection count
     detection_history[u]['tab_switching'] += 1
-    detection_history[u]['alert_history'].append({
-        'timestamp': datetime.now().isoformat(),
-        'type': 'tab_switching',
-        'message': 'Tab switching detected!'
+    
+    if should_alert:
+        # Update last alert time
+        last_alert_time[alert_key] = current_time
+        print(f"ALERT: tab_switching - First time, sending alert to {u}")
+        
+        detection_history[u]['alert_history'].append({
+            'timestamp': datetime.now().isoformat(),
+            'type': 'tab_switching',
+            'message': 'Tab switching detected!'
+        })
+        save_detection_data()
+        
+        return jsonify({'alert': True,
+                        'message': 'Please stay on the exam page. Tab switching detected!',
+                        'sound_type': 'tab_switching'})
+    else:
+        # In cooldown, don't send alert but still count the detection
+        print(f"COOLDOWN: tab_switching - Suppressing repeat alert for {u}")
+        return jsonify({'alert': False})
+
+# --- Exam Management Routes ---
+
+# Create new exam
+@app.route('/admin/create_exam', methods=['GET', 'POST'])
+def create_exam():
+    if 'username' not in session or users[session['username']]['role'] != 'admin':
+        return redirect(url_for('login'))
+    
+    if request.method == 'POST':
+        data = request.get_json()
+        exam_id = f"exam_{int(datetime.now().timestamp())}"
+        exams_data[exam_id] = {
+            'title': data['title'],
+            'description': data['description'],
+            'duration_minutes': int(data['duration_minutes']),
+            'questions': data['questions'],
+            'created_at': datetime.now().isoformat(),
+            'created_by': session['username'],
+            'status': 'draft'  # draft, active, completed
+        }
+        save_exams_data()
+        return jsonify({'success': True, 'exam_id': exam_id})
+    
+    return render_template('create_exam.html')
+
+# List all exams
+@app.route('/admin/exams')
+def list_exams():
+    if 'username' not in session or users[session['username']]['role'] != 'admin':
+        return redirect(url_for('login'))
+    
+    return render_template('admin_exams.html', exams=exams_data)
+
+# Start exam session
+@app.route('/admin/start_exam/<exam_id>', methods=['POST'])
+def start_exam(exam_id):
+    if 'username' not in session or users[session['username']]['role'] != 'admin':
+        return jsonify({'error': 'Not authenticated'}), 401
+    
+    if exam_id not in exams_data:
+        return jsonify({'error': 'Exam not found'}), 404
+    
+    session_id = f"session_{int(datetime.now().timestamp())}"
+    exam_sessions[session_id] = {
+        'exam_id': exam_id,
+        'started_at': datetime.now().isoformat(),
+        'status': 'active',  # active, completed
+        'students': [],
+        'student_answers': {},
+        'student_detections': {}
+    }
+    
+    exams_data[exam_id]['status'] = 'active'
+    save_exam_sessions()
+    save_exams_data()
+    
+    return jsonify({'success': True, 'session_id': session_id})
+
+# Stop exam session
+@app.route('/admin/stop_exam/<session_id>', methods=['POST'])
+def stop_exam(session_id):
+    if 'username' not in session or users[session['username']]['role'] != 'admin':
+        return jsonify({'error': 'Not authenticated'}), 401
+    
+    if session_id not in exam_sessions:
+        return jsonify({'error': 'Session not found'}), 404
+    
+    exam_sessions[session_id]['status'] = 'completed'
+    exam_sessions[session_id]['ended_at'] = datetime.now().isoformat()
+    
+    # Update exam status
+    exam_id = exam_sessions[session_id]['exam_id']
+    exams_data[exam_id]['status'] = 'completed'
+    
+    save_exam_sessions()
+    save_exams_data()
+    
+    return jsonify({'success': True})
+
+# Student exam dashboard
+@app.route('/student/exams')
+def student_exams():
+    if 'username' not in session or users[session['username']]['role'] != 'student':
+        return redirect(url_for('login'))
+    
+    # Get active exam sessions
+    active_sessions = []
+    for session_id, session_data in exam_sessions.items():
+        if session_data['status'] == 'active':
+            exam = exams_data[session_data['exam_id']]
+            active_sessions.append({
+                'session_id': session_id,
+                'exam': exam,
+                'started_at': session_data['started_at']
+            })
+    
+    return render_template('student_exams.html', sessions=active_sessions)
+
+# Direct exam start - show questions and start monitoring
+@app.route('/student/start_exam/<session_id>')
+def start_exam_direct(session_id):
+    if 'username' not in session or users[session['username']]['role'] != 'student':
+        return redirect(url_for('login'))
+    
+    if session_id not in exam_sessions:
+        return render_template('error.html', message='Exam session not found')
+    
+    session_data = exam_sessions[session_id]
+    if session_data['status'] != 'active':
+        return render_template('error.html', message='Exam session is not active')
+    
+    exam = exams_data[session_data['exam_id']]
+    
+    # Add student to session if not already added
+    if session['username'] not in session_data['students']:
+        session_data['students'].append(session['username'])
+        session_data['student_answers'][session['username']] = {}
+        session_data['student_detections'][session['username']] = []
+        save_exam_sessions()
+    
+    return render_template('exam_interface.html', 
+                         exam=exam, 
+                         session_id=session_id,
+                         student=session['username'])
+
+# Submit exam answer
+@app.route('/student/submit_answer', methods=['POST'])
+def submit_answer():
+    if 'username' not in session or users[session['username']]['role'] != 'student':
+        return jsonify({'error': 'Not authenticated'}), 401
+    
+    data = request.get_json()
+    session_id = data['session_id']
+    question_id = data['question_id']
+    answer = data['answer']
+    
+    if session_id not in exam_sessions:
+        return jsonify({'error': 'Session not found'}), 404
+    
+    exam_sessions[session_id]['student_answers'][session['username']][question_id] = answer
+    save_exam_sessions()
+    
+    return jsonify({'success': True})
+
+# Submit detection data during exam
+@app.route('/student/exam_detection', methods=['POST'])
+def exam_detection():
+    if 'username' not in session or users[session['username']]['role'] != 'student':
+        return jsonify({'error': 'Not authenticated'}), 401
+    
+    data = request.get_json()
+    session_id = data['session_id']
+    detection_type = data['detection_type']
+    timestamp = datetime.now().isoformat()
+    
+    if session_id not in exam_sessions:
+        return jsonify({'error': 'Session not found'}), 404
+    
+    # Add detection to session data
+    if session['username'] not in exam_sessions[session_id]['student_detections']:
+        exam_sessions[session_id]['student_detections'][session['username']] = []
+    
+    exam_sessions[session_id]['student_detections'][session['username']].append({
+        'type': detection_type,
+        'timestamp': timestamp
     })
-    save_detection_data()
-    return jsonify({'alert': True,
-                    'message': 'Please stay on the exam page. Tab switching detected!',
-                    'sound_type': 'tab_switching'})
+    
+    save_exam_sessions()
+    return jsonify({'success': True})
+
+# View exam results
+@app.route('/admin/exam_results/<session_id>')
+def exam_results(session_id):
+    if 'username' not in session or users[session['username']]['role'] != 'admin':
+        return redirect(url_for('login'))
+    
+    if session_id not in exam_sessions:
+        return render_template('error.html', message='Session not found')
+    
+    session_data = exam_sessions[session_id]
+    exam = exams_data[session_data['exam_id']]
+    
+    return render_template('exam_results.html', 
+                         exam=exam, 
+                         session=session_data,
+                         students=session_data['students'])
 
 if __name__ == '__main__':
     print("🎓 Student Behavior Monitoring System — http://127.0.0.1:8080")

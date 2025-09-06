@@ -251,6 +251,26 @@
                 <p>No student data available yet. Students need to log in and start monitoring first.</p>
             </div>
             {% endif %}
+
+            <!-- Exam Management Section -->
+            <div class="exam-management"
+                style="margin-top: 30px; padding: 20px; background: white; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
+                <h2 style="margin-bottom: 20px; color: #333;">📝 Exam Management</h2>
+                <div class="exam-actions" style="display: flex; gap: 15px; flex-wrap: wrap;">
+                    <a href="/admin/exams" class="exam-action-btn"
+                        style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 12px 24px; border-radius: 8px; text-decoration: none; font-weight: 600; display: inline-block; transition: transform 0.2s;">📚
+                        Manage Exams</a>
+                    <a href="/admin/create_exam" class="exam-action-btn"
+                        style="background: linear-gradient(135deg, #56ab2f 0%, #a8e6cf 100%); color: white; padding: 12px 24px; border-radius: 8px; text-decoration: none; font-weight: 600; display: inline-block; transition: transform 0.2s;">➕
+                        Create New Exam</a>
+                </div>
+                <style>
+                    .exam-action-btn:hover {
+                        transform: translateY(-2px);
+                        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+                    }
+                </style>
+            </div>
         </div>
     </div>
 </body>
