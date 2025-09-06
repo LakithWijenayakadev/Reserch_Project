@@ -328,8 +328,10 @@ def analyze():
     if face_detected:
         # Clear cooldowns for this user to allow immediate alerts if issues return
         keys_to_remove = [key for key in last_alert_time.keys() if key.startswith(f"{u}_")]
-        for key in keys_to_remove:
-            del last_alert_time[key]
+        if keys_to_remove:
+            print(f"RESET: Face detected for {u}, clearing {len(keys_to_remove)} cooldowns")
+            for key in keys_to_remove:
+                del last_alert_time[key]
 
     if decision in ('looking_away','multiple_people','no_face','blur_screen'):
         # Check cooldown to prevent spam alerts
@@ -346,6 +348,7 @@ def analyze():
         if should_alert:
             # Update last alert time
             last_alert_time[alert_key] = current_time
+            print(f"ALERT: {decision} - First time, sending alert to {u}")
             
             msg_map = {
                 'looking_away': 'Looking away from screen detected!',
@@ -362,7 +365,9 @@ def analyze():
                         message=msg_map[decision],
                         sound_type=decision,
                         screen_blurred=(decision=='blur_screen'))
-        # If in cooldown, don't send alert but still count the detection
+        else:
+            # If in cooldown, don't send alert but still count the detection
+            print(f"COOLDOWN: {decision} - Suppressing repeat alert for {u}")
 
     return jsonify(resp)
 
@@ -388,6 +393,7 @@ def tab_switch():
     if should_alert:
         # Update last alert time
         last_alert_time[alert_key] = current_time
+        print(f"ALERT: tab_switching - First time, sending alert to {u}")
         
         detection_history[u]['alert_history'].append({
             'timestamp': datetime.now().isoformat(),
@@ -401,6 +407,7 @@ def tab_switch():
                         'sound_type': 'tab_switching'})
     else:
         # In cooldown, don't send alert but still count the detection
+        print(f"COOLDOWN: tab_switching - Suppressing repeat alert for {u}")
         return jsonify({'alert': False})
 
 # --- Exam Management Routes ---
