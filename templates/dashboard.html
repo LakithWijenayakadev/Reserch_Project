@@ -90,6 +90,20 @@
             background: #e5e7eb
         }
 
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            background: #9ca3af !important;
+        }
+
+        .btn-primary:disabled {
+            background: #9ca3af !important;
+        }
+
+        .btn-danger:disabled {
+            background: #9ca3af !important;
+        }
+
         .counts {
             display: grid;
             grid-template-columns: repeat(5, 1fr);
@@ -172,7 +186,7 @@
 
                 <div class="top-actions">
                     <button id="requestCamera" class="btn btn-muted">Allow camera</button>
-                    <button id="startBtn" class="btn btn-primary" disabled>Start monitoring</button>
+                    <button id="startBtn" class="btn btn-primary" disabled>Start Monitoring</button>
                     <button id="stopBtn" class="btn btn-danger" disabled>Stop</button>
                     <label style="margin-left:auto"><input type="checkbox" id="soundEnabled" checked /> Voice
                         alerts</label>
@@ -286,7 +300,12 @@
                 video.srcObject = stream;
                 cameraPermission.style.display = 'none';
                 videoContainer.style.display = 'block';
+
+                // Enable start button and update styling
                 startBtn.disabled = false;
+                startBtn.textContent = "Start Monitoring";
+                startBtn.className = "btn btn-primary";
+
                 cameraAllowed = true;
                 detectionStatus.textContent = "✅ Camera active - Ready to start monitoring";
                 detectionStatus.className = "status-indicator status-good";
@@ -374,14 +393,39 @@
         function hideAlert() { alertBox.style.display = 'none'; }
 
         function startMonitoring() {
-            if (!cameraAllowed) { alert('Please allow camera access first'); return; }
-            isMonitoring = true; startBtn.disabled = true; stopBtn.disabled = false;
+            if (!cameraAllowed) {
+                alert('Please allow camera access first');
+                return;
+            }
+
+            // Start monitoring
+            isMonitoring = true;
+            startBtn.disabled = true;
+            stopBtn.disabled = false;
+
+            // Update button text and styling
+            startBtn.textContent = "Monitoring...";
+            startBtn.className = "btn btn-primary";
+            stopBtn.textContent = "Stop Monitoring";
+            stopBtn.className = "btn btn-danger";
+
             detectionStatus.textContent = "🔍 Monitoring active - Analyzing behavior";
             detectionStatus.className = "status-indicator status-good";
             analysisInterval = setInterval(analyzeBehavior, 3000); // every 3s
         }
+
         function stopMonitoring() {
-            isMonitoring = false; startBtn.disabled = false; stopBtn.disabled = true;
+            // Stop monitoring
+            isMonitoring = false;
+            startBtn.disabled = false;
+            stopBtn.disabled = true;
+
+            // Update button text and styling
+            startBtn.textContent = "Start Monitoring";
+            startBtn.className = "btn btn-primary";
+            stopBtn.textContent = "Stopped";
+            stopBtn.className = "btn btn-danger";
+
             clearInterval(analysisInterval);
             detectionStatus.textContent = "⏸️ Monitoring paused";
             detectionStatus.className = "status-indicator status-warning";
