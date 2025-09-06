@@ -1,0 +1,338 @@
+from flask import Flask, render_template, request, jsonify, session, redirect, url_for
+import cv2, numpy as np, base64, os, json
+from datetime import datetime
+
+app = Flask(__name__)
+app.secret_key = 'student-monitoring-system-2024'
+
+# --- Users ---
+users = {
+    'student1': {'password': 'password1', 'name': 'John Doe', 'role': 'student'},
+    'student2': {'password': 'password2', 'name': 'Jane Smith', 'role': 'student'},
+    'admin':    {'password': 'admin123',  'name': 'Administrator', 'role': 'admin'}
+}
+
+# --- Persistent detection store ---
+detection_history = {}
+
+def load_detection_data():
+    global detection_history
+    try:
+        if os.path.exists('detection_data.json'):
+            with open('detection_data.json', 'r') as f:
+                detection_history = json.load(f)
+    except Exception:
+        detection_history = {}
+
+def save_detection_data():
+    try:
+        with open('detection_data.json', 'w') as f:
+            json.dump(detection_history, f, indent=2)
+    except Exception:
+        pass
+
+load_detection_data()
+
+def ensure_bucket(username: str):
+    if username not in detection_history:
+        detection_history[username] = {
+            'looking_away': 0,
+            'multiple_people': 0,
+            'no_face': 0,
+            'blur_screen': 0,
+            'tab_switching': 0,
+            'alert_history': []
+        }
+
+# --- Always land on Login first ---
+@app.route('/')
+def index():
+    return redirect(url_for('login'))
+
+# --- Auth ---
+@app.route('/login', methods=['GET','POST'])
+def login():
+    if request.method == 'POST':
+        u = request.form.get('username','').strip()
+        p = request.form.get('password','')
+        if u in users and users[u]['password'] == p:
+            session['username'] = u
+            if users[u]['role'] == 'student':
+                ensure_bucket(u)
+                save_detection_data()
+            return redirect(url_for('admin_dashboard' if users[u]['role']=='admin' else 'dashboard'))
+        return render_template('login.html', error='Invalid username or password')
+    return render_template('login.html')
+
+@app.route('/logout')
+def logout():
+    session.pop('username', None)
+    return redirect(url_for('login'))
+
+# --- Student dashboard ---
+@app.route('/dashboard')
+def dashboard():
+    if 'username' not in session or users[session['username']]['role'] != 'student':
+        return redirect(url_for('login'))
+    u = session['username']
+    ensure_bucket(u)
+    counts = {k:v for k,v in detection_history[u].items() if k!='alert_history'}
+    return render_template('dashboard.html', name=users[u]['name'], counts=counts, username=u)
+
+# --- Admin dashboard ---
+@app.route('/admin')
+def admin_dashboard():
+    if 'username' not in session or users[session['username']]['role'] != 'admin':
+        return redirect(url_for('login'))
+    return render_template('admin_dashboard.html', users=users, detection_history=detection_history)
+
+# --- Student history (admin only) ---
+@app.route('/student_history/<username>')
+def student_history(username):
+    if 'username' not in session or users[session['username']]['role'] != 'admin':
+        return redirect(url_for('login'))
+    if username not in detection_history:
+        return render_template('student_history.html',
+                               user={'name':'Unknown','username':username},
+                               error='No data available for this student')
+    return render_template('student_history.html',
+                           user={'name': users.get(username,{}).get('name','Unknown'),
+                                 'username': username},
+                           history=detection_history[username])
+
+# --- Lightweight CV detectors (heuristics only; no random) ---
+face_cascade    = cv2.CascadeClassifier(cv2.data.haarcascades+'haarcascade_frontalface_default.xml')
+profile_cascade = cv2.CascadeClassifier(cv2.data.haarcascades+'haarcascade_profileface.xml')
+eye_cascade     = cv2.CascadeClassifier(cv2.data.haarcascades+'haarcascade_eye.xml')
+
+def laplacian_variance(gray):
+    return float(cv2.Laplacian(gray, cv2.CV_64F).var())
+
+# Global variables for movement and absence detection
+prev_frame = None
+last_face_detected = None
+absence_start_time = None
+
+def analyze_frame(image_bgr):
+    """
+    Returns one of: 'multiple_people', 'no_face', 'looking_away', 'blur_screen', 'none'
+    """
+    global prev_frame, last_face_detected, absence_start_time
+    import time
+    
+    if image_bgr is None or image_bgr.size == 0:
+        return 'no_face'
+
+    h, w = image_bgr.shape[:2]
+    if max(w, h) > 640:
+        scale = 640 / max(w, h)
+        image_bgr = cv2.resize(image_bgr, (int(w*scale), int(h*scale)))
+    gray = cv2.cvtColor(image_bgr, cv2.COLOR_BGR2GRAY)
+    
+    # Store current frame for next comparison
+    prev_frame = gray.copy()
+
+    blur = laplacian_variance(gray)
+    
+    # Use more lenient face detection parameters to catch partial faces
+    faces  = face_cascade.detectMultiScale(gray, 1.1, 3, minSize=(30, 30))
+    profs  = profile_cascade.detectMultiScale(gray, 1.1, 3, minSize=(30, 30))
+    
+    # Also try detecting faces at different scales for better coverage
+    faces_alt = face_cascade.detectMultiScale(gray, 1.05, 2, minSize=(20, 20))
+    profs_alt = profile_cascade.detectMultiScale(gray, 1.05, 2, minSize=(20, 20))
+    
+    # Combine all detections
+    allf = list(faces) + list(profs) + list(faces_alt) + list(profs_alt)
+    filtered_faces = []
+    
+    # Remove overlapping face detections (within 40% overlap - more lenient)
+    for i, face1 in enumerate(allf):
+        is_duplicate = False
+        for face2 in filtered_faces:
+            x1, y1, w1, h1 = face1
+            x2, y2, w2, h2 = face2
+            
+            # Calculate overlap
+            overlap_x = max(0, min(x1 + w1, x2 + w2) - max(x1, x2))
+            overlap_y = max(0, min(y1 + h1, y2 + h2) - max(y1, y2))
+            overlap_area = overlap_x * overlap_y
+            face1_area = w1 * h1
+            face2_area = w2 * h2
+            
+            if overlap_area > 0.4 * min(face1_area, face2_area):
+                is_duplicate = True
+                break
+        
+        if not is_duplicate:
+            filtered_faces.append(face1)
+    
+    fcnt = len(filtered_faces)
+    current_time = time.time()
+
+    if fcnt == 0:
+        # Track absence duration
+        if absence_start_time is None:
+            absence_start_time = current_time
+        
+        # When no face is detected, analyze image to determine if person is absent or looking away
+        mean_brightness = np.mean(gray)
+        std_brightness = np.std(gray)
+        
+        # Check for movement/change from previous frame to detect if person moved away
+        movement_detected = False
+        if prev_frame is not None:
+            diff = cv2.absdiff(gray, prev_frame)
+            movement_score = np.mean(diff)
+            movement_detected = movement_score > 10  # Threshold for significant movement
+        
+        # Time-based analysis
+        absence_duration = current_time - absence_start_time if absence_start_time else 0
+        
+        # More sophisticated absence detection:
+        # 1. Very dark image (person turned off lights) -> no_face
+        # 2. Very low contrast (blurry/empty room) -> no_face  
+        # 3. High brightness + low contrast (empty bright room) -> no_face
+        # 4. Absent for more than 5 seconds -> no_face (likely left)
+        # 5. Recent movement detected -> looking_away (person moved out of frame)
+        # 6. Otherwise -> looking_away (person might be partially visible)
+        
+        is_very_dark = mean_brightness < 30
+        is_low_contrast = std_brightness < 15
+        is_empty_bright_room = mean_brightness > 100 and std_brightness < 25
+        is_long_absence = absence_duration > 5.0  # 5 seconds
+        
+        if is_very_dark or is_low_contrast or is_empty_bright_room or is_long_absence:
+            decision = 'no_face'
+            print(f"No face detected - person absent: brightness={mean_brightness:.1f}, contrast={std_brightness:.1f}, duration={absence_duration:.1f}s")
+        elif movement_detected:
+            decision = 'looking_away'
+            print(f"No face but person moved away: brightness={mean_brightness:.1f}, movement={movement_score:.1f}")
+        else:
+            decision = 'looking_away'
+            print(f"No face but looking away detected: brightness={mean_brightness:.1f}, contrast={std_brightness:.1f}")
+    elif fcnt >= 2:
+        # Face detected - reset absence tracking
+        last_face_detected = current_time
+        absence_start_time = None
+        decision = 'multiple_people'
+        print(f"Multiple people detected: {fcnt} faces")
+    else:
+        # Face detected - reset absence tracking
+        last_face_detected = current_time
+        absence_start_time = None
+        
+        # one face → check eyes/aspect (looking away)
+        x, y, wf, hf = max(filtered_faces, key=lambda r: r[2]*r[3])
+        aspect = (wf/float(hf)) if hf else 0.0
+        roi = gray[y:y+hf, x:x+wf]
+        # Try multiple eye detection methods for better sensitivity
+        eyes = eye_cascade.detectMultiScale(roi, 1.05, 2)  # Even more lenient
+        eyes_alt = eye_cascade.detectMultiScale(roi, 1.1, 1)  # Alternative detection
+        
+        # Use the detection that finds more eyes
+        eyes_count = max(len(eyes), len(eyes_alt))
+        
+        # More sensitive looking away detection
+        face_area = wf * hf
+        image_area = gray.shape[0] * gray.shape[1]
+        face_ratio = face_area / image_area
+        
+        # More sensitive triggers for looking away:
+        # 1. Face is wide (side profile) - lowered threshold
+        # 2. Face is small (partial face) - increased threshold  
+        # 3. No eyes detected (most important indicator)
+        # 4. Face positioned off-center (looking to side)
+        face_center_x = x + wf/2
+        image_center_x = gray.shape[1] / 2
+        face_offset = abs(face_center_x - image_center_x) / image_center_x
+        
+        is_side_profile = aspect > 1.1  # Lowered from 1.2
+        is_partial_face = face_ratio < 0.08  # Increased from 0.05 (8% instead of 5%)
+        is_off_center = face_offset > 0.3  # Face is more than 30% off center
+        no_eyes = eyes_count == 0
+        
+        # Trigger looking away if any of these conditions are met:
+        # - Side profile OR partial face OR off-center face, AND no eyes detected
+        # - OR just no eyes detected (most sensitive)
+        decision = 'looking_away' if ((is_side_profile or is_partial_face or is_off_center) and no_eyes) or no_eyes else 'none'
+        if decision == 'looking_away':
+            print(f"Looking away detected: aspect={aspect:.2f}, eyes={eyes_count}, face_ratio={face_ratio:.3f}, offset={face_offset:.2f}")
+
+    # blur detection - only trigger for very blurry images (much more lenient threshold)
+    # Normal laptop webcams typically have blur values between 50-200
+    if blur < 15.0 and decision in ('none','looking_away'):
+        decision = 'blur_screen'
+        print(f"Blur detected: {blur:.2f} (threshold: 15.0)")
+
+    return decision
+
+# --- Analyze endpoint (alert only when detection happens) ---
+@app.route('/analyze', methods=['POST'])
+def analyze():
+    if 'username' not in session or users[session['username']]['role'] != 'student':
+        return jsonify({'error': 'Not authenticated'}), 401
+
+    u = session['username']
+    ensure_bucket(u)
+
+    payload = request.get_json(silent=True) or {}
+    img_b64 = payload.get('image')
+    if not img_b64:
+        return jsonify({'error':'No image data provided'}), 400
+
+    # decode dataURL (base64)
+    b64 = img_b64.split(',', 1)[-1]
+    img = cv2.imdecode(np.frombuffer(base64.b64decode(b64), np.uint8), cv2.IMREAD_COLOR)
+    decision = analyze_frame(img)
+
+    ts = datetime.now().isoformat()
+    resp = {
+        'alert': False,
+        'message': 'Everything looks good. Keep focusing on your exam!',
+        'sound_type': None,
+        'screen_blurred': False
+    }
+
+    if decision in ('looking_away','multiple_people','no_face','blur_screen'):
+        detection_history[u][decision] += 1
+        msg_map = {
+            'looking_away': 'Looking away from screen detected!',
+            'multiple_people': 'Multiple people detected!',
+            'no_face': 'No face detected!',
+            'blur_screen': 'Screen blur detected!'
+        }
+        detection_history[u]['alert_history'].append({
+            'timestamp': ts, 'type': decision, 'message': msg_map[decision]
+        })
+        save_detection_data()
+
+        resp.update(alert=True,
+                    message=msg_map[decision],
+                    sound_type=decision,
+                    screen_blurred=(decision=='blur_screen'))
+
+    return jsonify(resp)
+
+# --- Tab switching (counts + admin visibility) ---
+@app.route('/tab_switch', methods=['POST'])
+def tab_switch():
+    if 'username' not in session or users[session['username']]['role'] != 'student':
+        return jsonify({'error':'Not authenticated'}), 401
+    u = session['username']
+    ensure_bucket(u)
+    detection_history[u]['tab_switching'] += 1
+    detection_history[u]['alert_history'].append({
+        'timestamp': datetime.now().isoformat(),
+        'type': 'tab_switching',
+        'message': 'Tab switching detected!'
+    })
+    save_detection_data()
+    return jsonify({'alert': True,
+                    'message': 'Please stay on the exam page. Tab switching detected!',
+                    'sound_type': 'tab_switching'})
+
+if __name__ == '__main__':
+    print("🎓 Student Behavior Monitoring System — http://127.0.0.1:8080")
+    print("Admin: admin/admin123 | Students: student1/password1, student2/password2")
+    app.run(debug=True, host='127.0.0.1', port=8080, use_reloader=False)

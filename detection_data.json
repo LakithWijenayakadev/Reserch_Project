@@ -1,0 +1,1486 @@
+{
+  "student1": {
+    "looking_away": 34,
+    "multiple_people": 74,
+    "no_face": 47,
+    "blur_screen": 102,
+    "tab_switching": 38,
+    "alert_history": [
+      {
+        "timestamp": "2025-09-05T17:10:00.333815",
+        "type": "no_face",
+        "message": "No face detected! Please position yourself in front of the camera."
+      },
+      {
+        "timestamp": "2025-09-05T17:10:02.998429",
+        "type": "blur_screen",
+        "message": "Screen blur detected! Please adjust your camera for clear visibility."
+      },
+      {
+        "timestamp": "2025-09-05T17:10:06.008837",
+        "type": "blur_screen",
+        "message": "Screen blur detected! Please adjust your camera for clear visibility."
+      },
+      {
+        "timestamp": "2025-09-05T17:10:08.997302",
+        "type": "blur_screen",
+        "message": "Screen blur detected! Please adjust your camera for clear visibility."
+      },
+      {
+        "timestamp": "2025-09-05T17:10:11.994207",
+        "type": "blur_screen",
+        "message": "Screen blur detected! Please adjust your camera for clear visibility."
+      },
+      {
+        "timestamp": "2025-09-05T17:10:14.993525",
+        "type": "blur_screen",
+        "message": "Screen blur detected! Please adjust your camera for clear visibility."
+      },
+      {
+        "timestamp": "2025-09-05T17:10:17.995923",
+        "type": "blur_screen",
+        "message": "Screen blur detected! Please adjust your camera for clear visibility."
+      },
+      {
+        "timestamp": "2025-09-05T17:10:21.007564",
+        "type": "blur_screen",
+        "message": "Screen blur detected! Please adjust your camera for clear visibility."
+      },
+      {
+        "timestamp": "2025-09-05T17:10:24.005555",
+        "type": "blur_screen",
+        "message": "Screen blur detected! Please adjust your camera for clear visibility."
+      },
+      {
+        "timestamp": "2025-09-05T17:10:27.005163",
+        "type": "blur_screen",
+        "message": "Screen blur detected! Please adjust your camera for clear visibility."
+      },
+      {
+        "timestamp": "2025-09-05T17:10:29.990484",
+        "type": "looking_away",
+        "message": "Looking away from screen detected!"
+      },
+      {
+        "timestamp": "2025-09-05T17:10:33.017552",
+        "type": "looking_away",
+        "message": "Looking away from screen detected!"
+      },
+      {
+        "timestamp": "2025-09-05T17:10:41.390980",
+        "type": "looking_away",
+        "message": "Looking away from screen detected!"
+      },
+      {
+        "timestamp": "2025-09-05T17:10:44.391166",
+        "type": "looking_away",
+        "message": "Looking away from screen detected!"
+      },
+      {
+        "timestamp": "2025-09-05T17:10:47.391789",
+        "type": "blur_screen",
+        "message": "Screen blur detected! Please adjust your camera for clear visibility."
+      },
+      {
+        "timestamp": "2025-09-05T17:10:50.401223",
+        "type": "looking_away",
+        "message": "Looking away from screen detected!"
+      },
+      {
+        "timestamp": "2025-09-05T17:10:52.301654",
+        "type": "tab_switching",
+        "message": "Tab switching detected! Please remain in the exam window."
+      },
+      {
+        "timestamp": "2025-09-05T17:10:52.301654",
+        "type": "tab_switching",
+        "message": "Tab switching detected! Please remain in the exam window."
+      },
+      {
+        "timestamp": "2025-09-05T17:10:53.411633",
+        "type": "blur_screen",
+        "message": "Screen blur detected! Please adjust your camera for clear visibility."
+      },
+      {
+        "timestamp": "2025-09-05T17:10:55.181863",
+        "type": "tab_switching",
+        "message": "Tab switching detected! Please remain in the exam window."
+      },
+      {
+        "timestamp": "2025-09-05T17:10:55.182864",
+        "type": "tab_switching",
+        "message": "Tab switching detected! Please remain in the exam window."
+      },
+      {
+        "timestamp": "2025-09-05T17:10:56.395614",
+        "type": "blur_screen",
+        "message": "Screen blur detected! Please adjust your camera for clear visibility."
+      },
+      {
+        "timestamp": "2025-09-05T17:10:59.400609",
+        "type": "looking_away",
+        "message": "Looking away from screen detected!"
+      },
+      {
+        "timestamp": "2025-09-05T17:29:43.056012",
+        "type": "looking_away",
+        "message": "Looking away from screen detected!"
+      },
+      {
+        "timestamp": "2025-09-05T17:29:46.048945",
+        "type": "looking_away",
+        "message": "Looking away from screen detected!"
+      },
+      {
+        "timestamp": "2025-09-05T17:29:49.055152",
+        "type": "looking_away",
+        "message": "Looking away from screen detected!"
+      },
+      {
+        "timestamp": "2025-09-05T17:29:52.065852",
+        "type": "looking_away",
+        "message": "Looking away from screen detected!"
+      },
+      {
+        "timestamp": "2025-09-05T17:29:55.060165",
+        "type": "looking_away",
+        "message": "Looking away from screen detected!"
+      },
+      {
+        "timestamp": "2025-09-05T17:29:58.090923",
+        "type": "blur_screen",
+        "message": "Screen blur detected! Please adjust your camera for clear visibility."
+      },
+      {
+        "timestamp": "2025-09-05T17:30:01.063441",
+        "type": "blur_screen",
+        "message": "Screen blur detected! Please adjust your camera for clear visibility."
+      },
+      {
+        "timestamp": "2025-09-05T17:30:04.057512",
+        "type": "looking_away",
+        "message": "Looking away from screen detected!"
+      },
+      {
+        "timestamp": "2025-09-05T17:30:07.059356",
+        "type": "looking_away",
+        "message": "Looking away from screen detected!"
+      },
+      {
+        "timestamp": "2025-09-05T17:30:10.049085",
+        "type": "blur_screen",
+        "message": "Screen blur detected! Please adjust your camera for clear visibility."
+      },
+      {
+        "timestamp": "2025-09-05T17:30:13.039371",
+        "type": "no_face",
+        "message": "No face detected! Please position yourself in front of the camera."
+      },
+      {
+        "timestamp": "2025-09-05T17:45:16.994440",
+        "type": "blur_screen",
+        "message": "Screen blur detected!"
+      },
+      {
+        "timestamp": "2025-09-05T17:45:19.727459",
+        "type": "blur_screen",
+        "message": "Screen blur detected!"
+      },
+      {
+        "timestamp": "2025-09-05T17:45:22.721903",
+        "type": "blur_screen",
+        "message": "Screen blur detected!"
+      },
+      {
+        "timestamp": "2025-09-05T17:45:25.724346",
+        "type": "multiple_people",
+        "message": "Multiple people detected!"
+      },
+      {
+        "timestamp": "2025-09-05T17:45:28.723548",
+        "type": "blur_screen",
+        "message": "Screen blur detected!"
+      },
+      {
+        "timestamp": "2025-09-05T17:45:31.727053",
+        "type": "blur_screen",
+        "message": "Screen blur detected!"
+      },
+      {
+        "timestamp": "2025-09-05T17:45:34.707389",
+        "type": "no_face",
+        "message": "No face detected!"
+      },
+      {
+        "timestamp": "2025-09-05T17:45:37.713081",
+        "type": "no_face",
+        "message": "No face detected!"
+      },
+      {
+        "timestamp": "2025-09-05T17:45:40.706066",
+        "type": "no_face",
+        "message": "No face detected!"
+      },
+      {
+        "timestamp": "2025-09-05T17:45:43.704861",
+        "type": "no_face",
+        "message": "No face detected!"
+      },
+      {
+        "timestamp": "2025-09-05T17:45:46.712056",
+        "type": "no_face",
+        "message": "No face detected!"
+      },
+      {
+        "timestamp": "2025-09-05T17:45:49.735256",
+        "type": "blur_screen",
+        "message": "Screen blur detected!"
+      },
+      {
+        "timestamp": "2025-09-05T17:45:52.734320",
+        "type": "blur_screen",
+        "message": "Screen blur detected!"
+      },
+      {
+        "timestamp": "2025-09-05T17:45:55.722937",
+        "type": "blur_screen",
+        "message": "Screen blur detected!"
+      },
+      {
+        "timestamp": "2025-09-06T00:13:13.594506",
+        "type": "blur_screen",
+        "message": "Screen blur detected!"
+      },
+      {
+        "timestamp": "2025-09-06T00:13:16.275285",
+        "type": "multiple_people",
+        "message": "Multiple people detected!"
+      },
+      {
+        "timestamp": "2025-09-06T00:13:19.246549",
+        "type": "no_face",
+        "message": "No face detected!"
+      },
+      {
+        "timestamp": "2025-09-06T00:13:22.274840",
+        "type": "multiple_people",
+        "message": "Multiple people detected!"
+      },
+      {
+        "timestamp": "2025-09-06T00:13:25.295438",
+        "type": "blur_screen",
+        "message": "Screen blur detected!"
+      },
+      {
+        "timestamp": "2025-09-06T00:13:28.300603",
+        "type": "blur_screen",
+        "message": "Screen blur detected!"
+      },
+      {
+        "timestamp": "2025-09-06T00:13:31.266537",
+        "type": "no_face",
+        "message": "No face detected!"
+      },
+      {
+        "timestamp": "2025-09-06T00:13:34.265835",
+        "type": "no_face",
+        "message": "No face detected!"
+      },
+      {
+        "timestamp": "2025-09-06T00:13:37.276164",
+        "type": "no_face",
+        "message": "No face detected!"
+      },
+      {
+        "timestamp": "2025-09-06T00:13:40.292213",
+        "type": "blur_screen",
+        "message": "Screen blur detected!"
+      },
+      {
+        "timestamp": "2025-09-06T00:13:43.273563",
+        "type": "blur_screen",
+        "message": "Screen blur detected!"
+      },
+      {
+        "timestamp": "2025-09-06T00:13:46.296094",
+        "type": "no_face",
+        "message": "No face detected!"
+      },
+      {
+        "timestamp": "2025-09-06T00:13:49.257857",
+        "type": "no_face",
+        "message": "No face detected!"
+      },
+      {
+        "timestamp": "2025-09-06T00:13:52.277918",
+        "type": "no_face",
+        "message": "No face detected!"
+      },
+      {
+        "timestamp": "2025-09-06T00:13:55.291574",
+        "type": "blur_screen",
+        "message": "Screen blur detected!"
+      },
+      {
+        "timestamp": "2025-09-06T00:13:58.311778",
+        "type": "blur_screen",
+        "message": "Screen blur detected!"
+      },
+      {
+        "timestamp": "2025-09-06T00:13:58.782582",
+        "type": "tab_switching",
+        "message": "Tab switching detected!"
+      },
+      {
+        "timestamp": "2025-09-06T00:14:01.280611",
+        "type": "blur_screen",
+        "message": "Screen blur detected!"
+      },
+      {
+        "timestamp": "2025-09-06T00:14:04.278354",
+        "type": "no_face",
+        "message": "No face detected!"
+      },
+      {
+        "timestamp": "2025-09-06T00:14:07.327263",
+        "type": "blur_screen",
+        "message": "Screen blur detected!"
+      },
+      {
+        "timestamp": "2025-09-06T00:14:10.272739",
+        "type": "multiple_people",
+        "message": "Multiple people detected!"
+      },
+      {
+        "timestamp": "2025-09-06T00:14:13.256416",
+        "type": "no_face",
+        "message": "No face detected!"
+      },
+      {
+        "timestamp": "2025-09-06T00:14:16.275349",
+        "type": "no_face",
+        "message": "No face detected!"
+      },
+      {
+        "timestamp": "2025-09-06T00:14:19.278368",
+        "type": "no_face",
+        "message": "No face detected!"
+      },
+      {
+        "timestamp": "2025-09-06T00:14:22.284891",
+        "type": "no_face",
+        "message": "No face detected!"
+      },
+      {
+        "timestamp": "2025-09-06T00:14:25.281937",
+        "type": "no_face",
+        "message": "No face detected!"
+      },
+      {
+        "timestamp": "2025-09-06T00:14:28.237877",
+        "type": "no_face",
+        "message": "No face detected!"
+      },
+      {
+        "timestamp": "2025-09-06T00:14:31.279623",
+        "type": "no_face",
+        "message": "No face detected!"
+      },
+      {
+        "timestamp": "2025-09-06T00:14:34.275283",
+        "type": "no_face",
+        "message": "No face detected!"
+      },
+      {
+        "timestamp": "2025-09-06T00:14:37.264272",
+        "type": "no_face",
+        "message": "No face detected!"
+      },
+      {
+        "timestamp": "2025-09-06T00:14:40.263618",
+        "type": "no_face",
+        "message": "No face detected!"
+      },
+      {
+        "timestamp": "2025-09-06T00:14:41.796050",
+        "type": "tab_switching",
+        "message": "Tab switching detected!"
+      },
+      {
+        "timestamp": "2025-09-06T00:14:41.862032",
+        "type": "tab_switching",
+        "message": "Tab switching detected!"
+      },
+      {
+        "timestamp": "2025-09-06T09:30:43.253959",
+        "type": "blur_screen",
+        "message": "Screen blur detected!"
+      },
+      {
+        "timestamp": "2025-09-06T09:30:45.895625",
+        "type": "blur_screen",
+        "message": "Screen blur detected!"
+      },
+      {
+        "timestamp": "2025-09-06T09:30:48.878142",
+        "type": "blur_screen",
+        "message": "Screen blur detected!"
+      },
+      {
+        "timestamp": "2025-09-06T09:30:51.851673",
+        "type": "multiple_people",
+        "message": "Multiple people detected!"
+      },
+      {
+        "timestamp": "2025-09-06T09:30:54.872911",
+        "type": "blur_screen",
+        "message": "Screen blur detected!"
+      },
+      {
+        "timestamp": "2025-09-06T09:30:56.347893",
+        "type": "tab_switching",
+        "message": "Tab switching detected!"
+      },
+      {
+        "timestamp": "2025-09-06T09:30:57.868469",
+        "type": "blur_screen",
+        "message": "Screen blur detected!"
+      },
+      {
+        "timestamp": "2025-09-06T09:31:00.858954",
+        "type": "no_face",
+        "message": "No face detected!"
+      },
+      {
+        "timestamp": "2025-09-06T09:31:03.870884",
+        "type": "blur_screen",
+        "message": "Screen blur detected!"
+      },
+      {
+        "timestamp": "2025-09-06T09:31:06.868034",
+        "type": "blur_screen",
+        "message": "Screen blur detected!"
+      },
+      {
+        "timestamp": "2025-09-06T09:31:09.865577",
+        "type": "blur_screen",
+        "message": "Screen blur detected!"
+      },
+      {
+        "timestamp": "2025-09-06T09:31:12.861970",
+        "type": "no_face",
+        "message": "No face detected!"
+      },
+      {
+        "timestamp": "2025-09-06T09:31:15.862805",
+        "type": "blur_screen",
+        "message": "Screen blur detected!"
+      },
+      {
+        "timestamp": "2025-09-06T09:31:18.872932",
+        "type": "blur_screen",
+        "message": "Screen blur detected!"
+      },
+      {
+        "timestamp": "2025-09-06T09:31:21.863910",
+        "type": "no_face",
+        "message": "No face detected!"
+      },
+      {
+        "timestamp": "2025-09-06T09:31:24.873624",
+        "type": "blur_screen",
+        "message": "Screen blur detected!"
+      },
+      {
+        "timestamp": "2025-09-06T09:31:27.867877",
+        "type": "blur_screen",
+        "message": "Screen blur detected!"
+      },
+      {
+        "timestamp": "2025-09-06T09:31:30.860845",
+        "type": "blur_screen",
+        "message": "Screen blur detected!"
+      },
+      {
+        "timestamp": "2025-09-06T09:31:33.881756",
+        "type": "blur_screen",
+        "message": "Screen blur detected!"
+      },
+      {
+        "timestamp": "2025-09-06T09:31:36.883124",
+        "type": "blur_screen",
+        "message": "Screen blur detected!"
+      },
+      {
+        "timestamp": "2025-09-06T09:31:39.898110",
+        "type": "blur_screen",
+        "message": "Screen blur detected!"
+      },
+      {
+        "timestamp": "2025-09-06T09:31:42.879335",
+        "type": "blur_screen",
+        "message": "Screen blur detected!"
+      },
+      {
+        "timestamp": "2025-09-06T09:31:45.862332",
+        "type": "blur_screen",
+        "message": "Screen blur detected!"
+      },
+      {
+        "timestamp": "2025-09-06T09:31:48.878889",
+        "type": "blur_screen",
+        "message": "Screen blur detected!"
+      },
+      {
+        "timestamp": "2025-09-06T09:31:51.899923",
+        "type": "blur_screen",
+        "message": "Screen blur detected!"
+      },
+      {
+        "timestamp": "2025-09-06T09:31:54.895059",
+        "type": "blur_screen",
+        "message": "Screen blur detected!"
+      },
+      {
+        "timestamp": "2025-09-06T09:31:57.874479",
+        "type": "blur_screen",
+        "message": "Screen blur detected!"
+      },
+      {
+        "timestamp": "2025-09-06T09:32:00.866266",
+        "type": "blur_screen",
+        "message": "Screen blur detected!"
+      },
+      {
+        "timestamp": "2025-09-06T09:32:03.899916",
+        "type": "blur_screen",
+        "message": "Screen blur detected!"
+      },
+      {
+        "timestamp": "2025-09-06T09:32:06.915601",
+        "type": "blur_screen",
+        "message": "Screen blur detected!"
+      },
+      {
+        "timestamp": "2025-09-06T09:32:09.885726",
+        "type": "blur_screen",
+        "message": "Screen blur detected!"
+      },
+      {
+        "timestamp": "2025-09-06T09:32:23.512810",
+        "type": "blur_screen",
+        "message": "Screen blur detected!"
+      },
+      {
+        "timestamp": "2025-09-06T09:32:24.842617",
+        "type": "blur_screen",
+        "message": "Screen blur detected!"
+      },
+      {
+        "timestamp": "2025-09-06T09:32:24.975333",
+        "type": "tab_switching",
+        "message": "Tab switching detected!"
+      },
+      {
+        "timestamp": "2025-09-06T09:32:43.858431",
+        "type": "tab_switching",
+        "message": "Tab switching detected!"
+      },
+      {
+        "timestamp": "2025-09-06T09:32:44.009331",
+        "type": "multiple_people",
+        "message": "Multiple people detected!"
+      },
+      {
+        "timestamp": "2025-09-06T09:32:47.022825",
+        "type": "multiple_people",
+        "message": "Multiple people detected!"
+      },
+      {
+        "timestamp": "2025-09-06T09:32:50.027303",
+        "type": "blur_screen",
+        "message": "Screen blur detected!"
+      },
+      {
+        "timestamp": "2025-09-06T09:32:53.030490",
+        "type": "multiple_people",
+        "message": "Multiple people detected!"
+      },
+      {
+        "timestamp": "2025-09-06T09:32:53.163602",
+        "type": "tab_switching",
+        "message": "Tab switching detected!"
+      },
+      {
+        "timestamp": "2025-09-06T09:32:53.171155",
+        "type": "tab_switching",
+        "message": "Tab switching detected!"
+      },
+      {
+        "timestamp": "2025-09-06T09:32:56.019561",
+        "type": "blur_screen",
+        "message": "Screen blur detected!"
+      },
+      {
+        "timestamp": "2025-09-06T09:32:59.019893",
+        "type": "blur_screen",
+        "message": "Screen blur detected!"
+      },
+      {
+        "timestamp": "2025-09-06T09:33:02.031675",
+        "type": "blur_screen",
+        "message": "Screen blur detected!"
+      },
+      {
+        "timestamp": "2025-09-06T09:33:05.030914",
+        "type": "blur_screen",
+        "message": "Screen blur detected!"
+      },
+      {
+        "timestamp": "2025-09-06T09:33:08.014576",
+        "type": "blur_screen",
+        "message": "Screen blur detected!"
+      },
+      {
+        "timestamp": "2025-09-06T09:33:11.033403",
+        "type": "blur_screen",
+        "message": "Screen blur detected!"
+      },
+      {
+        "timestamp": "2025-09-06T09:33:14.025708",
+        "type": "blur_screen",
+        "message": "Screen blur detected!"
+      },
+      {
+        "timestamp": "2025-09-06T09:33:17.029313",
+        "type": "blur_screen",
+        "message": "Screen blur detected!"
+      },
+      {
+        "timestamp": "2025-09-06T09:33:20.016228",
+        "type": "blur_screen",
+        "message": "Screen blur detected!"
+      },
+      {
+        "timestamp": "2025-09-06T09:33:20.249956",
+        "type": "tab_switching",
+        "message": "Tab switching detected!"
+      },
+      {
+        "timestamp": "2025-09-06T09:33:23.004801",
+        "type": "blur_screen",
+        "message": "Screen blur detected!"
+      },
+      {
+        "timestamp": "2025-09-06T09:33:26.008432",
+        "type": "blur_screen",
+        "message": "Screen blur detected!"
+      },
+      {
+        "timestamp": "2025-09-06T09:33:29.006412",
+        "type": "no_face",
+        "message": "No face detected!"
+      },
+      {
+        "timestamp": "2025-09-06T09:33:32.026037",
+        "type": "blur_screen",
+        "message": "Screen blur detected!"
+      },
+      {
+        "timestamp": "2025-09-06T09:33:35.021149",
+        "type": "blur_screen",
+        "message": "Screen blur detected!"
+      },
+      {
+        "timestamp": "2025-09-06T09:33:38.000128",
+        "type": "blur_screen",
+        "message": "Screen blur detected!"
+      },
+      {
+        "timestamp": "2025-09-06T09:33:41.002164",
+        "type": "blur_screen",
+        "message": "Screen blur detected!"
+      },
+      {
+        "timestamp": "2025-09-06T09:33:44.012967",
+        "type": "blur_screen",
+        "message": "Screen blur detected!"
+      },
+      {
+        "timestamp": "2025-09-06T09:33:47.015374",
+        "type": "blur_screen",
+        "message": "Screen blur detected!"
+      },
+      {
+        "timestamp": "2025-09-06T09:33:50.012602",
+        "type": "blur_screen",
+        "message": "Screen blur detected!"
+      },
+      {
+        "timestamp": "2025-09-06T09:33:53.011226",
+        "type": "blur_screen",
+        "message": "Screen blur detected!"
+      },
+      {
+        "timestamp": "2025-09-06T09:33:56.018701",
+        "type": "blur_screen",
+        "message": "Screen blur detected!"
+      },
+      {
+        "timestamp": "2025-09-06T09:33:59.017820",
+        "type": "blur_screen",
+        "message": "Screen blur detected!"
+      },
+      {
+        "timestamp": "2025-09-06T09:34:02.038756",
+        "type": "blur_screen",
+        "message": "Screen blur detected!"
+      },
+      {
+        "timestamp": "2025-09-06T09:34:05.021914",
+        "type": "blur_screen",
+        "message": "Screen blur detected!"
+      },
+      {
+        "timestamp": "2025-09-06T09:34:08.006318",
+        "type": "blur_screen",
+        "message": "Screen blur detected!"
+      },
+      {
+        "timestamp": "2025-09-06T09:34:11.012831",
+        "type": "blur_screen",
+        "message": "Screen blur detected!"
+      },
+      {
+        "timestamp": "2025-09-06T09:34:14.033915",
+        "type": "blur_screen",
+        "message": "Screen blur detected!"
+      },
+      {
+        "timestamp": "2025-09-06T09:34:17.008149",
+        "type": "blur_screen",
+        "message": "Screen blur detected!"
+      },
+      {
+        "timestamp": "2025-09-06T09:34:20.001223",
+        "type": "blur_screen",
+        "message": "Screen blur detected!"
+      },
+      {
+        "timestamp": "2025-09-06T09:34:23.011364",
+        "type": "blur_screen",
+        "message": "Screen blur detected!"
+      },
+      {
+        "timestamp": "2025-09-06T09:34:26.016700",
+        "type": "blur_screen",
+        "message": "Screen blur detected!"
+      },
+      {
+        "timestamp": "2025-09-06T09:34:29.008149",
+        "type": "blur_screen",
+        "message": "Screen blur detected!"
+      },
+      {
+        "timestamp": "2025-09-06T09:34:32.005731",
+        "type": "multiple_people",
+        "message": "Multiple people detected!"
+      },
+      {
+        "timestamp": "2025-09-06T09:34:35.015548",
+        "type": "multiple_people",
+        "message": "Multiple people detected!"
+      },
+      {
+        "timestamp": "2025-09-06T09:34:38.012956",
+        "type": "multiple_people",
+        "message": "Multiple people detected!"
+      },
+      {
+        "timestamp": "2025-09-06T09:34:41.035920",
+        "type": "multiple_people",
+        "message": "Multiple people detected!"
+      },
+      {
+        "timestamp": "2025-09-06T09:34:44.059008",
+        "type": "multiple_people",
+        "message": "Multiple people detected!"
+      },
+      {
+        "timestamp": "2025-09-06T09:34:47.046746",
+        "type": "multiple_people",
+        "message": "Multiple people detected!"
+      },
+      {
+        "timestamp": "2025-09-06T09:34:50.034263",
+        "type": "multiple_people",
+        "message": "Multiple people detected!"
+      },
+      {
+        "timestamp": "2025-09-06T09:34:53.009529",
+        "type": "multiple_people",
+        "message": "Multiple people detected!"
+      },
+      {
+        "timestamp": "2025-09-06T09:34:56.030510",
+        "type": "blur_screen",
+        "message": "Screen blur detected!"
+      },
+      {
+        "timestamp": "2025-09-06T09:34:59.008190",
+        "type": "multiple_people",
+        "message": "Multiple people detected!"
+      },
+      {
+        "timestamp": "2025-09-06T09:35:02.023004",
+        "type": "blur_screen",
+        "message": "Screen blur detected!"
+      },
+      {
+        "timestamp": "2025-09-06T09:35:05.026631",
+        "type": "blur_screen",
+        "message": "Screen blur detected!"
+      },
+      {
+        "timestamp": "2025-09-06T09:35:08.014879",
+        "type": "blur_screen",
+        "message": "Screen blur detected!"
+      },
+      {
+        "timestamp": "2025-09-06T09:35:11.024185",
+        "type": "blur_screen",
+        "message": "Screen blur detected!"
+      },
+      {
+        "timestamp": "2025-09-06T09:35:14.011489",
+        "type": "multiple_people",
+        "message": "Multiple people detected!"
+      },
+      {
+        "timestamp": "2025-09-06T09:35:17.024223",
+        "type": "multiple_people",
+        "message": "Multiple people detected!"
+      },
+      {
+        "timestamp": "2025-09-06T09:35:20.039143",
+        "type": "multiple_people",
+        "message": "Multiple people detected!"
+      },
+      {
+        "timestamp": "2025-09-06T09:35:23.037341",
+        "type": "multiple_people",
+        "message": "Multiple people detected!"
+      },
+      {
+        "timestamp": "2025-09-06T09:35:26.010179",
+        "type": "multiple_people",
+        "message": "Multiple people detected!"
+      },
+      {
+        "timestamp": "2025-09-06T09:35:29.012929",
+        "type": "multiple_people",
+        "message": "Multiple people detected!"
+      },
+      {
+        "timestamp": "2025-09-06T09:35:32.037759",
+        "type": "multiple_people",
+        "message": "Multiple people detected!"
+      },
+      {
+        "timestamp": "2025-09-06T09:35:35.012589",
+        "type": "multiple_people",
+        "message": "Multiple people detected!"
+      },
+      {
+        "timestamp": "2025-09-06T09:35:38.010427",
+        "type": "multiple_people",
+        "message": "Multiple people detected!"
+      },
+      {
+        "timestamp": "2025-09-06T09:35:41.020643",
+        "type": "multiple_people",
+        "message": "Multiple people detected!"
+      },
+      {
+        "timestamp": "2025-09-06T09:35:43.996545",
+        "type": "multiple_people",
+        "message": "Multiple people detected!"
+      },
+      {
+        "timestamp": "2025-09-06T09:35:47.025494",
+        "type": "multiple_people",
+        "message": "Multiple people detected!"
+      },
+      {
+        "timestamp": "2025-09-06T09:35:50.007687",
+        "type": "multiple_people",
+        "message": "Multiple people detected!"
+      },
+      {
+        "timestamp": "2025-09-06T09:35:56.127401",
+        "type": "multiple_people",
+        "message": "Multiple people detected!"
+      },
+      {
+        "timestamp": "2025-09-06T09:35:58.480357",
+        "type": "tab_switching",
+        "message": "Tab switching detected!"
+      },
+      {
+        "timestamp": "2025-09-06T09:35:58.510611",
+        "type": "tab_switching",
+        "message": "Tab switching detected!"
+      },
+      {
+        "timestamp": "2025-09-06T09:36:24.825257",
+        "type": "looking_away",
+        "message": "Looking away from screen detected!"
+      },
+      {
+        "timestamp": "2025-09-06T09:36:33.816145",
+        "type": "multiple_people",
+        "message": "Multiple people detected!"
+      },
+      {
+        "timestamp": "2025-09-06T09:36:36.830124",
+        "type": "multiple_people",
+        "message": "Multiple people detected!"
+      },
+      {
+        "timestamp": "2025-09-06T09:37:06.823062",
+        "type": "multiple_people",
+        "message": "Multiple people detected!"
+      },
+      {
+        "timestamp": "2025-09-06T09:37:12.821489",
+        "type": "multiple_people",
+        "message": "Multiple people detected!"
+      },
+      {
+        "timestamp": "2025-09-06T09:37:15.811500",
+        "type": "multiple_people",
+        "message": "Multiple people detected!"
+      },
+      {
+        "timestamp": "2025-09-06T09:37:18.819026",
+        "type": "multiple_people",
+        "message": "Multiple people detected!"
+      },
+      {
+        "timestamp": "2025-09-06T09:37:30.825204",
+        "type": "multiple_people",
+        "message": "Multiple people detected!"
+      },
+      {
+        "timestamp": "2025-09-06T09:37:30.917653",
+        "type": "tab_switching",
+        "message": "Tab switching detected!"
+      },
+      {
+        "timestamp": "2025-09-06T09:37:33.829131",
+        "type": "no_face",
+        "message": "No face detected!"
+      },
+      {
+        "timestamp": "2025-09-06T09:37:36.819720",
+        "type": "multiple_people",
+        "message": "Multiple people detected!"
+      },
+      {
+        "timestamp": "2025-09-06T09:37:39.818342",
+        "type": "multiple_people",
+        "message": "Multiple people detected!"
+      },
+      {
+        "timestamp": "2025-09-06T09:37:42.862492",
+        "type": "tab_switching",
+        "message": "Tab switching detected!"
+      },
+      {
+        "timestamp": "2025-09-06T09:37:42.865935",
+        "type": "tab_switching",
+        "message": "Tab switching detected!"
+      },
+      {
+        "timestamp": "2025-09-06T09:37:42.910612",
+        "type": "multiple_people",
+        "message": "Multiple people detected!"
+      },
+      {
+        "timestamp": "2025-09-06T09:38:01.129314",
+        "type": "tab_switching",
+        "message": "Tab switching detected!"
+      },
+      {
+        "timestamp": "2025-09-06T09:38:01.131026",
+        "type": "tab_switching",
+        "message": "Tab switching detected!"
+      },
+      {
+        "timestamp": "2025-09-06T09:38:11.068639",
+        "type": "tab_switching",
+        "message": "Tab switching detected!"
+      },
+      {
+        "timestamp": "2025-09-06T09:38:11.071264",
+        "type": "tab_switching",
+        "message": "Tab switching detected!"
+      },
+      {
+        "timestamp": "2025-09-06T09:38:23.929387",
+        "type": "tab_switching",
+        "message": "Tab switching detected!"
+      },
+      {
+        "timestamp": "2025-09-06T09:38:23.931134",
+        "type": "tab_switching",
+        "message": "Tab switching detected!"
+      },
+      {
+        "timestamp": "2025-09-06T09:38:30.836923",
+        "type": "multiple_people",
+        "message": "Multiple people detected!"
+      },
+      {
+        "timestamp": "2025-09-06T09:38:31.302356",
+        "type": "tab_switching",
+        "message": "Tab switching detected!"
+      },
+      {
+        "timestamp": "2025-09-06T09:38:33.807124",
+        "type": "multiple_people",
+        "message": "Multiple people detected!"
+      },
+      {
+        "timestamp": "2025-09-06T09:38:39.809781",
+        "type": "no_face",
+        "message": "No face detected!"
+      },
+      {
+        "timestamp": "2025-09-06T09:38:45.812263",
+        "type": "multiple_people",
+        "message": "Multiple people detected!"
+      },
+      {
+        "timestamp": "2025-09-06T09:38:51.822611",
+        "type": "multiple_people",
+        "message": "Multiple people detected!"
+      },
+      {
+        "timestamp": "2025-09-06T09:38:54.825783",
+        "type": "no_face",
+        "message": "No face detected!"
+      },
+      {
+        "timestamp": "2025-09-06T09:39:00.822241",
+        "type": "multiple_people",
+        "message": "Multiple people detected!"
+      },
+      {
+        "timestamp": "2025-09-06T09:39:03.833964",
+        "type": "multiple_people",
+        "message": "Multiple people detected!"
+      },
+      {
+        "timestamp": "2025-09-06T09:39:06.836537",
+        "type": "multiple_people",
+        "message": "Multiple people detected!"
+      },
+      {
+        "timestamp": "2025-09-06T09:39:09.833763",
+        "type": "multiple_people",
+        "message": "Multiple people detected!"
+      },
+      {
+        "timestamp": "2025-09-06T09:39:12.858298",
+        "type": "multiple_people",
+        "message": "Multiple people detected!"
+      },
+      {
+        "timestamp": "2025-09-06T09:39:15.862480",
+        "type": "multiple_people",
+        "message": "Multiple people detected!"
+      },
+      {
+        "timestamp": "2025-09-06T09:39:18.846423",
+        "type": "multiple_people",
+        "message": "Multiple people detected!"
+      },
+      {
+        "timestamp": "2025-09-06T09:39:21.841560",
+        "type": "multiple_people",
+        "message": "Multiple people detected!"
+      },
+      {
+        "timestamp": "2025-09-06T09:39:24.859050",
+        "type": "multiple_people",
+        "message": "Multiple people detected!"
+      },
+      {
+        "timestamp": "2025-09-06T09:39:27.840612",
+        "type": "multiple_people",
+        "message": "Multiple people detected!"
+      },
+      {
+        "timestamp": "2025-09-06T09:39:30.866923",
+        "type": "multiple_people",
+        "message": "Multiple people detected!"
+      },
+      {
+        "timestamp": "2025-09-06T09:39:33.849789",
+        "type": "multiple_people",
+        "message": "Multiple people detected!"
+      },
+      {
+        "timestamp": "2025-09-06T09:39:39.825528",
+        "type": "multiple_people",
+        "message": "Multiple people detected!"
+      },
+      {
+        "timestamp": "2025-09-06T09:39:42.813034",
+        "type": "multiple_people",
+        "message": "Multiple people detected!"
+      },
+      {
+        "timestamp": "2025-09-06T09:39:45.846953",
+        "type": "multiple_people",
+        "message": "Multiple people detected!"
+      },
+      {
+        "timestamp": "2025-09-06T09:40:48.904901",
+        "type": "tab_switching",
+        "message": "Tab switching detected!"
+      },
+      {
+        "timestamp": "2025-09-06T09:40:48.909610",
+        "type": "tab_switching",
+        "message": "Tab switching detected!"
+      },
+      {
+        "timestamp": "2025-09-06T09:40:54.687297",
+        "type": "no_face",
+        "message": "No face detected!"
+      },
+      {
+        "timestamp": "2025-09-06T09:41:00.698960",
+        "type": "no_face",
+        "message": "No face detected!"
+      },
+      {
+        "timestamp": "2025-09-06T09:41:03.689356",
+        "type": "no_face",
+        "message": "No face detected!"
+      },
+      {
+        "timestamp": "2025-09-06T09:41:06.690603",
+        "type": "no_face",
+        "message": "No face detected!"
+      },
+      {
+        "timestamp": "2025-09-06T09:41:09.684967",
+        "type": "no_face",
+        "message": "No face detected!"
+      },
+      {
+        "timestamp": "2025-09-06T09:41:12.685928",
+        "type": "no_face",
+        "message": "No face detected!"
+      },
+      {
+        "timestamp": "2025-09-06T09:41:15.691379",
+        "type": "no_face",
+        "message": "No face detected!"
+      },
+      {
+        "timestamp": "2025-09-06T09:41:21.693007",
+        "type": "no_face",
+        "message": "No face detected!"
+      },
+      {
+        "timestamp": "2025-09-06T09:41:25.004146",
+        "type": "tab_switching",
+        "message": "Tab switching detected!"
+      },
+      {
+        "timestamp": "2025-09-06T09:41:27.709958",
+        "type": "no_face",
+        "message": "No face detected!"
+      },
+      {
+        "timestamp": "2025-09-06T09:41:33.697301",
+        "type": "no_face",
+        "message": "No face detected!"
+      },
+      {
+        "timestamp": "2025-09-06T09:41:39.702181",
+        "type": "no_face",
+        "message": "No face detected!"
+      },
+      {
+        "timestamp": "2025-09-06T09:41:42.698777",
+        "type": "no_face",
+        "message": "No face detected!"
+      },
+      {
+        "timestamp": "2025-09-06T09:41:48.696419",
+        "type": "no_face",
+        "message": "No face detected!"
+      },
+      {
+        "timestamp": "2025-09-06T09:41:54.693319",
+        "type": "no_face",
+        "message": "No face detected!"
+      },
+      {
+        "timestamp": "2025-09-06T09:41:57.705836",
+        "type": "no_face",
+        "message": "No face detected!"
+      },
+      {
+        "timestamp": "2025-09-06T09:44:50.917725",
+        "type": "tab_switching",
+        "message": "Tab switching detected!"
+      },
+      {
+        "timestamp": "2025-09-06T09:45:00.710694",
+        "type": "tab_switching",
+        "message": "Tab switching detected!"
+      },
+      {
+        "timestamp": "2025-09-06T09:45:10.966484",
+        "type": "looking_away",
+        "message": "Looking away from screen detected!"
+      },
+      {
+        "timestamp": "2025-09-06T09:45:22.952510",
+        "type": "looking_away",
+        "message": "Looking away from screen detected!"
+      },
+      {
+        "timestamp": "2025-09-06T09:45:25.973514",
+        "type": "multiple_people",
+        "message": "Multiple people detected!"
+      },
+      {
+        "timestamp": "2025-09-06T09:45:37.955895",
+        "type": "looking_away",
+        "message": "Looking away from screen detected!"
+      },
+      {
+        "timestamp": "2025-09-06T09:45:43.978568",
+        "type": "looking_away",
+        "message": "Looking away from screen detected!"
+      },
+      {
+        "timestamp": "2025-09-06T09:45:52.942005",
+        "type": "looking_away",
+        "message": "Looking away from screen detected!"
+      },
+      {
+        "timestamp": "2025-09-06T09:45:58.926477",
+        "type": "blur_screen",
+        "message": "Screen blur detected!"
+      },
+      {
+        "timestamp": "2025-09-06T09:46:01.938278",
+        "type": "blur_screen",
+        "message": "Screen blur detected!"
+      },
+      {
+        "timestamp": "2025-09-06T09:46:04.926063",
+        "type": "blur_screen",
+        "message": "Screen blur detected!"
+      },
+      {
+        "timestamp": "2025-09-06T09:46:07.946634",
+        "type": "blur_screen",
+        "message": "Screen blur detected!"
+      },
+      {
+        "timestamp": "2025-09-06T09:46:10.951590",
+        "type": "blur_screen",
+        "message": "Screen blur detected!"
+      },
+      {
+        "timestamp": "2025-09-06T09:46:13.956388",
+        "type": "looking_away",
+        "message": "Looking away from screen detected!"
+      },
+      {
+        "timestamp": "2025-09-06T09:46:16.987529",
+        "type": "looking_away",
+        "message": "Looking away from screen detected!"
+      },
+      {
+        "timestamp": "2025-09-06T09:46:22.712419",
+        "type": "tab_switching",
+        "message": "Tab switching detected!"
+      },
+      {
+        "timestamp": "2025-09-06T09:46:37.966479",
+        "type": "multiple_people",
+        "message": "Multiple people detected!"
+      },
+      {
+        "timestamp": "2025-09-06T09:46:55.949639",
+        "type": "multiple_people",
+        "message": "Multiple people detected!"
+      },
+      {
+        "timestamp": "2025-09-06T09:47:04.989792",
+        "type": "multiple_people",
+        "message": "Multiple people detected!"
+      },
+      {
+        "timestamp": "2025-09-06T09:47:07.944764",
+        "type": "multiple_people",
+        "message": "Multiple people detected!"
+      },
+      {
+        "timestamp": "2025-09-06T09:47:11.017915",
+        "type": "multiple_people",
+        "message": "Multiple people detected!"
+      },
+      {
+        "timestamp": "2025-09-06T09:47:16.952890",
+        "type": "multiple_people",
+        "message": "Multiple people detected!"
+      },
+      {
+        "timestamp": "2025-09-06T09:47:40.947245",
+        "type": "looking_away",
+        "message": "Looking away from screen detected!"
+      },
+      {
+        "timestamp": "2025-09-06T09:47:49.954187",
+        "type": "looking_away",
+        "message": "Looking away from screen detected!"
+      },
+      {
+        "timestamp": "2025-09-06T09:48:31.578555",
+        "type": "tab_switching",
+        "message": "Tab switching detected!"
+      },
+      {
+        "timestamp": "2025-09-06T09:48:40.872976",
+        "type": "tab_switching",
+        "message": "Tab switching detected!"
+      },
+      {
+        "timestamp": "2025-09-06T09:48:40.895324",
+        "type": "tab_switching",
+        "message": "Tab switching detected!"
+      },
+      {
+        "timestamp": "2025-09-06T09:51:29.088822",
+        "type": "multiple_people",
+        "message": "Multiple people detected!"
+      },
+      {
+        "timestamp": "2025-09-06T09:51:38.086912",
+        "type": "looking_away",
+        "message": "Looking away from screen detected!"
+      },
+      {
+        "timestamp": "2025-09-06T09:51:44.086681",
+        "type": "looking_away",
+        "message": "Looking away from screen detected!"
+      },
+      {
+        "timestamp": "2025-09-06T09:51:54.220113",
+        "type": "tab_switching",
+        "message": "Tab switching detected!"
+      },
+      {
+        "timestamp": "2025-09-06T09:51:54.234609",
+        "type": "tab_switching",
+        "message": "Tab switching detected!"
+      },
+      {
+        "timestamp": "2025-09-06T09:52:43.315071",
+        "type": "looking_away",
+        "message": "Looking away from screen detected!"
+      },
+      {
+        "timestamp": "2025-09-06T09:53:13.362183",
+        "type": "multiple_people",
+        "message": "Multiple people detected!"
+      },
+      {
+        "timestamp": "2025-09-06T09:53:19.329041",
+        "type": "multiple_people",
+        "message": "Multiple people detected!"
+      },
+      {
+        "timestamp": "2025-09-06T09:53:49.308292",
+        "type": "multiple_people",
+        "message": "Multiple people detected!"
+      },
+      {
+        "timestamp": "2025-09-06T09:54:10.284998",
+        "type": "looking_away",
+        "message": "Looking away from screen detected!"
+      },
+      {
+        "timestamp": "2025-09-06T09:54:19.301144",
+        "type": "looking_away",
+        "message": "Looking away from screen detected!"
+      },
+      {
+        "timestamp": "2025-09-06T09:54:53.626355",
+        "type": "tab_switching",
+        "message": "Tab switching detected!"
+      },
+      {
+        "timestamp": "2025-09-06T09:54:59.869688",
+        "type": "tab_switching",
+        "message": "Tab switching detected!"
+      },
+      {
+        "timestamp": "2025-09-06T09:55:01.318179",
+        "type": "multiple_people",
+        "message": "Multiple people detected!"
+      },
+      {
+        "timestamp": "2025-09-06T09:55:25.326837",
+        "type": "multiple_people",
+        "message": "Multiple people detected!"
+      },
+      {
+        "timestamp": "2025-09-06T09:55:37.310021",
+        "type": "multiple_people",
+        "message": "Multiple people detected!"
+      },
+      {
+        "timestamp": "2025-09-06T09:56:04.250473",
+        "type": "looking_away",
+        "message": "Looking away from screen detected!"
+      },
+      {
+        "timestamp": "2025-09-06T09:56:25.283166",
+        "type": "looking_away",
+        "message": "Looking away from screen detected!"
+      },
+      {
+        "timestamp": "2025-09-06T09:56:28.274153",
+        "type": "looking_away",
+        "message": "Looking away from screen detected!"
+      },
+      {
+        "timestamp": "2025-09-06T09:56:31.325557",
+        "type": "looking_away",
+        "message": "Looking away from screen detected!"
+      },
+      {
+        "timestamp": "2025-09-06T09:56:34.279461",
+        "type": "looking_away",
+        "message": "Looking away from screen detected!"
+      },
+      {
+        "timestamp": "2025-09-06T09:56:37.284583",
+        "type": "looking_away",
+        "message": "Looking away from screen detected!"
+      }
+    ]
+  }
+}

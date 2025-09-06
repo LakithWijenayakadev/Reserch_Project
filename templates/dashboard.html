@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Student Dashboard — Behavior Monitoring</title>
+    <style>
+        body {
+            font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu;
+            background: #f6f7fb;
+            margin: 0
+        }
+
+        .nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 14px 18px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: #fff
+        }
+
+        .wrap {
+            max-width: 1000px;
+            margin: 24px auto;
+            padding: 0 16px
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: 1.2fr .8fr;
+            gap: 16px
+        }
+
+        .card {
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, .06);
+            padding: 16px
+        }
+
+        .status-indicator {
+            padding: 10px;
+            border-radius: 8px;
+            margin: 8px 0
+        }
+
+        .status-good {
+            background: #e8f7ee;
+            color: #216e39
+        }
+
+        .status-warning {
+            background: #fffbe6;
+            color: #795300
+        }
+
+        .status-alert {
+            background: #fdecea;
+            color: #b42318
+        }
+
+        #video {
+            width: 100%;
+            border-radius: 8px;
+            background: #000;
+            transform: scaleX(-1);
+            /* Horizontal flip for mirror effect */
+        }
+
+        .btn {
+            padding: 10px 14px;
+            border: 0;
+            border-radius: 8px;
+            cursor: pointer
+        }
+
+        .btn-primary {
+            background: #667eea;
+            color: #fff
+        }
+
+        .btn-danger {
+            background: #ef4444;
+            color: #fff
+        }
+
+        .btn-muted {
+            background: #e5e7eb
+        }
+
+        .counts {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 10px;
+            margin-top: 12px
+        }
+
+        .count {
+            background: #f3f4f6;
+            border-radius: 8px;
+            padding: 10px;
+            text-align: center
+        }
+
+        .count .n {
+            font-weight: 700;
+            font-size: 20px;
+            color: #4f46e5
+        }
+
+        .alert-panel {
+            display: none;
+            position: fixed;
+            right: 20px;
+            bottom: 20px;
+            min-width: 260px;
+            background: #111;
+            color: #fff;
+            padding: 14px;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, .3);
+            z-index: 9999
+        }
+
+        .history {
+            max-height: 300px;
+            overflow: auto;
+            border: 1px solid #eee;
+            border-radius: 8px;
+            padding: 8px;
+            background: #fafafa
+        }
+
+        .alert-item {
+            display: flex;
+            gap: 10px;
+            padding: 8px;
+            border-bottom: 1px dashed #ddd
+        }
+
+        .alert-time {
+            font-size: 12px;
+            color: #6b7280;
+            min-width: 82px
+        }
+
+        .top-actions {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap
+        }
+    </style>
+</head>
+
+<body>
+    <div class="nav">
+        <div><strong>Hi, {{ name }}</strong> — Student Monitoring</div>
+        <div><a href="/logout" style="color:#fff;text-decoration:none">Logout</a></div>
+    </div>
+
+    <div class="wrap">
+        <div class="grid">
+            <div class="card">
+                <h3>Webcam</h3>
+                <div id="cameraPermission" class="status-indicator status-warning">Camera permission needed. Click
+                    “Allow camera”.</div>
+                <div id="videoContainer" style="display:none">
+                    <video id="video" autoplay playsinline></video>
+                </div>
+
+                <div class="top-actions">
+                    <button id="requestCamera" class="btn btn-muted">Allow camera</button>
+                    <button id="startBtn" class="btn btn-primary" disabled>Start monitoring</button>
+                    <button id="stopBtn" class="btn btn-danger" disabled>Stop</button>
+                    <label style="margin-left:auto"><input type="checkbox" id="soundEnabled" checked /> Voice
+                        alerts</label>
+                    <button id="testSound" class="btn btn-muted">Test alert</button>
+                </div>
+
+                <div id="detectionStatus" class="status-indicator status-warning">Waiting for camera…</div>
+
+                <div class="counts">
+                    <div class="count">
+                        <div>Looking Away</div>
+                        <div id="countLookingAway" class="n">{{ counts.looking_away }}</div>
+                    </div>
+                    <div class="count">
+                        <div>Multiple People</div>
+                        <div id="countMultiplePeople" class="n">{{ counts.multiple_people }}</div>
+                    </div>
+                    <div class="count">
+                        <div>No Face</div>
+                        <div id="countNoFace" class="n">{{ counts.no_face }}</div>
+                    </div>
+                    <div class="count">
+                        <div>Blur Screen</div>
+                        <div id="countScreenBlur" class="n">{{ counts.blur_screen }}</div>
+                    </div>
+                    <div class="count">
+                        <div>Tab Switching</div>
+                        <div id="countTabSwitching" class="n">{{ counts.tab_switching }}</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>Alert History</h3>
+                <div id="alertHistory" class="history">
+                    <div style="color:#6b7280">No alerts yet</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="alert" class="alert-panel">
+        <div style="display:flex;justify-content:space-between;align-items:center;gap:8px">
+            <div id="alertMessage">…</div>
+            <button onclick="hideAlert()" class="btn btn-muted">Close</button>
+        </div>
+    </div>
+
+    <!-- Student monitoring JS (with cooldown so it won't spam) -->
+    <script>
+        const video = document.getElementById('video');
+        const startBtn = document.getElementById('startBtn');
+        const stopBtn = document.getElementById('stopBtn');
+        const alertBox = document.getElementById('alert');
+        const alertMessage = document.getElementById('alertMessage');
+        const alertHistory = document.getElementById('alertHistory');
+        const soundEnabled = document.getElementById('soundEnabled');
+        const testSoundBtn = document.getElementById('testSound');
+        const detectionStatus = document.getElementById('detectionStatus');
+        const cameraPermission = document.getElementById('cameraPermission');
+        const requestCameraBtn = document.getElementById('requestCamera');
+        const videoContainer = document.getElementById('videoContainer');
+
+        const countElements = {
+            'looking_away': document.getElementById('countLookingAway'),
+            'multiple_people': document.getElementById('countMultiplePeople'),
+            'no_face': document.getElementById('countNoFace'),
+            'blur_screen': document.getElementById('countScreenBlur'),
+            'tab_switching': document.getElementById('countTabSwitching')
+        };
+
+        let stream = null, analysisInterval = null, isMonitoring = false, cameraAllowed = false;
+        let behaviorCounts = {
+            'looking_away': parseInt(countElements['looking_away'].textContent) || 0,
+            'multiple_people': parseInt(countElements['multiple_people'].textContent) || 0,
+            'no_face': parseInt(countElements['no_face'].textContent) || 0,
+            'blur_screen': parseInt(countElements['blur_screen'].textContent) || 0,
+            'tab_switching': parseInt(countElements['tab_switching'].textContent) || 0
+        };
+
+        const voiceMessages = {
+            'looking_away': "Please focus on your screen. Looking away detected.",
+            'multiple_people': "Please ensure you are alone during the exam.",
+            'no_face': "Please position yourself in front of the camera.",
+            'blur_screen': "Please adjust your camera for better visibility.",
+            'tab_switching': "Please stay on the exam page. Tab switching detected.",
+            'test': "This is a test of the alert system."
+        };
+
+        // Cooldown per alert type (ms) to avoid repeated alerts
+        const ALERT_COOLDOWN_MS = 8000;
+        const lastAlertAt = {
+            'looking_away': 0,
+            'multiple_people': 0,
+            'no_face': 0,
+            'blur_screen': 0,
+            'tab_switching': 0,
+            'test': 0
+        };
+
+        requestCameraBtn.addEventListener('click', setupCamera);
+
+        async function setupCamera() {
+            try {
+                detectionStatus.textContent = "🔄 Accessing camera...";
+                detectionStatus.className = "status-indicator status-warning";
+                stream = await navigator.mediaDevices.getUserMedia({
+                    video: { width: { ideal: 640 }, height: { ideal: 480 }, facingMode: 'user' },
+                    audio: false
+                });
+                video.srcObject = stream;
+                cameraPermission.style.display = 'none';
+                videoContainer.style.display = 'block';
+                startBtn.disabled = false;
+                cameraAllowed = true;
+                detectionStatus.textContent = "✅ Camera active - Ready to start monitoring";
+                detectionStatus.className = "status-indicator status-good";
+            } catch (e) {
+                detectionStatus.textContent = "❌ Camera access denied. Please allow camera access.";
+                detectionStatus.className = "status-indicator status-alert";
+                alert('Camera access is required. Please allow and refresh.');
+            }
+        }
+
+        document.addEventListener('visibilitychange', () => { if (document.hidden && isMonitoring) { reportTabSwitch(); } });
+        window.addEventListener('blur', () => { if (isMonitoring) { reportTabSwitch(); } });
+
+        async function reportTabSwitch() {
+            try {
+                const r = await fetch('/tab_switch', { method: 'POST', headers: { 'Content-Type': 'application/json' } });
+                const data = await r.json();
+                if (data.alert) { showAlert(data.message, 'tab_switching'); }
+            } catch (e) { console.error('Tab switch report failed:', e); }
+        }
+
+        function speak(msg) {
+            if (!soundEnabled.checked) return;
+            try { const u = new SpeechSynthesisUtterance(msg); window.speechSynthesis.speak(u); } catch { }
+        }
+
+        async function analyzeBehavior() {
+            if (!isMonitoring || !cameraAllowed) return;
+            try {
+                const canvas = document.createElement('canvas');
+                canvas.width = video.videoWidth; canvas.height = video.videoHeight;
+                const ctx = canvas.getContext('2d');
+
+                // Flip the image horizontally to match the displayed video
+                ctx.save();
+                ctx.scale(-1, 1);
+                ctx.drawImage(video, -canvas.width, 0, canvas.width, canvas.height);
+                ctx.restore();
+
+                const imageData = canvas.toDataURL('image/jpeg');
+
+                const resp = await fetch('/analyze', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ image: imageData }) });
+                const data = await resp.json();
+
+                if (data.alert) {
+                    showAlert(data.message, data.sound_type);
+                } else {
+                    detectionStatus.textContent = "✅ Monitoring - No issues detected";
+                    detectionStatus.className = "status-indicator status-good";
+                }
+            } catch (e) {
+                console.error('Analysis error:', e);
+                detectionStatus.textContent = "❌ Analysis error - Check connection";
+                detectionStatus.className = "status-indicator status-alert";
+            }
+        }
+
+        function showAlert(message, type) {
+            // cooldown gate
+            const now = Date.now();
+            if (type && lastAlertAt[type] && (now - lastAlertAt[type] < ALERT_COOLDOWN_MS)) {
+                return; // skip repeated same-type alert during cooldown
+            }
+            if (type) lastAlertAt[type] = now;
+
+            if (type && behaviorCounts[type] !== undefined) {
+                behaviorCounts[type]++; countElements[type].textContent = behaviorCounts[type];
+            }
+
+            alertMessage.textContent = message;
+            alertBox.style.display = 'block';
+
+            const item = document.createElement('div');
+            item.className = 'alert-item';
+            item.innerHTML = `<div class="alert-time">${new Date().toLocaleTimeString()}</div><div class="alert-message">${message}</div>`;
+            if (alertHistory.firstChild && alertHistory.firstChild.textContent === 'No alerts yet') { alertHistory.innerHTML = ''; }
+            alertHistory.prepend(item);
+
+            if (type && voiceMessages[type]) { speak(voiceMessages[type]); }
+            detectionStatus.textContent = `⚠️ Alert: ${message}`;
+            detectionStatus.className = "status-indicator status-alert";
+            setTimeout(hideAlert, 5000);
+        }
+
+        function hideAlert() { alertBox.style.display = 'none'; }
+
+        function startMonitoring() {
+            if (!cameraAllowed) { alert('Please allow camera access first'); return; }
+            isMonitoring = true; startBtn.disabled = true; stopBtn.disabled = false;
+            detectionStatus.textContent = "🔍 Monitoring active - Analyzing behavior";
+            detectionStatus.className = "status-indicator status-good";
+            analysisInterval = setInterval(analyzeBehavior, 3000); // every 3s
+        }
+        function stopMonitoring() {
+            isMonitoring = false; startBtn.disabled = false; stopBtn.disabled = true;
+            clearInterval(analysisInterval);
+            detectionStatus.textContent = "⏸️ Monitoring paused";
+            detectionStatus.className = "status-indicator status-warning";
+        }
+
+        startBtn.addEventListener('click', startMonitoring);
+        stopBtn.addEventListener('click', stopMonitoring);
+        testSoundBtn.addEventListener('click', () => { speak(voiceMessages.test); showAlert('Test alert completed', 'test'); });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+                setupCamera().catch(() => { /* user will click Allow manually */ });
+            }
+        });
+    </script>
+</body>
+
+</html>
