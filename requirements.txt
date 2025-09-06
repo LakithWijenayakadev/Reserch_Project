@@ -1,6 +1,44 @@
-Flask>=2.3.3
-opencv-python>=4.8.1.78
-numpy>=1.24.3
-Pillow>=10.0.0
-scikit-learn>=1.3.0
-joblib>=1.3.2
+# Spring Boot Exam Monitoring System Requirements
+
+## Java Dependencies (Maven)
+- Spring Boot 3.2.0
+- Spring Boot Starter Web
+- Spring Boot Starter Data JPA
+- Spring Boot Starter Thymeleaf
+- Spring Boot Starter Validation
+- Spring Boot Starter Security
+- PostgreSQL Driver
+- H2 Database (for testing)
+- OpenCV Java 4.8.0-0
+- Jackson Databind
+- Spring Boot DevTools
+
+## System Requirements
+- Java 17 or higher
+- Maven 3.6+
+- PostgreSQL 12+
+- Webcam-enabled device
+- Modern web browser with camera support
+
+## Browser Requirements
+- Chrome 80+
+- Firefox 75+
+- Safari 13+
+- Edge 80+
+
+## Database Setup
+- PostgreSQL server running on localhost:5432
+- Database: exam_monitoring
+- User: postgres (or configured user)
+- Password: postgres (or configured password)
+
+## Optional Dependencies
+- Docker (for containerized deployment)
+- Nginx (for production reverse proxy)
+- Redis (for session storage in production)
+
+## Development Tools
+- IntelliJ IDEA or Eclipse
+- Git
+- Postman (for API testing)
+- pgAdmin (for database management)

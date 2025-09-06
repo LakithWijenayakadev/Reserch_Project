@@ -103,12 +103,35 @@ def dashboard():
     counts = {k:v for k,v in detection_history[u].items() if k!='alert_history'}
     return render_template('dashboard.html', name=users[u]['name'], counts=counts, username=u)
 
-# --- Admin dashboard ---
+# --- Enhanced Admin dashboard ---
 @app.route('/admin')
 def admin_dashboard():
     if 'username' not in session or users[session['username']]['role'] != 'admin':
         return redirect(url_for('login'))
-    return render_template('admin_dashboard.html', users=users, detection_history=detection_history)
+    
+    # Calculate statistics
+    total_users = len(users)
+    total_exams = len(exams_data)
+    active_sessions = len([s for s in exam_sessions.values() if s.get('status') == 'active'])
+    total_detections = sum(
+        sum(data.get(k, 0) for k in ['looking_away', 'multiple_people', 'no_face', 'blur_screen', 'tab_switching'])
+        for data in detection_history.values()
+    )
+    
+    stats = {
+        'total_users': total_users,
+        'total_exams': total_exams,
+        'active_sessions': active_sessions,
+        'total_detections': total_detections
+    }
+    
+    return render_template('admin_dashboard.html', 
+                         users=users, 
+                         detection_history=detection_history,
+                         exams_data=exams_data,
+                         exam_sessions=exam_sessions,
+                         stats=stats)
+
 
 # --- Student history (admin only) ---
 @app.route('/student_history/<username>')
@@ -435,6 +458,92 @@ def tab_switch():
         print(f"COOLDOWN: tab_switching - Suppressing repeat alert for {u}")
         return jsonify({'alert': False})
 
+# --- User Management Routes ---
+
+# User management page
+@app.route('/admin/users')
+def manage_users():
+    if 'username' not in session or users[session['username']]['role'] != 'admin':
+        return redirect(url_for('login'))
+    
+    return render_template('admin_users.html', users=users)
+
+# Add new user
+@app.route('/admin/users/add', methods=['GET', 'POST'])
+def add_user():
+    if 'username' not in session or users[session['username']]['role'] != 'admin':
+        return redirect(url_for('login'))
+    
+    if request.method == 'POST':
+        data = request.get_json()
+        username = data.get('username', '').strip()
+        password = data.get('password', '').strip()
+        name = data.get('name', '').strip()
+        role = data.get('role', 'student')
+        
+        if not username or not password or not name:
+            return jsonify({'error': 'All fields are required'}), 400
+        
+        if username in users:
+            return jsonify({'error': 'Username already exists'}), 400
+        
+        users[username] = {
+            'password': password,
+            'name': name,
+            'role': role
+        }
+        
+        return jsonify({'success': True, 'message': 'User added successfully'})
+    
+    return render_template('add_user.html')
+
+# Edit user
+@app.route('/admin/users/edit/<username>', methods=['GET', 'POST'])
+def edit_user(username):
+    if 'username' not in session or users[session['username']]['role'] != 'admin':
+        return redirect(url_for('login'))
+    
+    if username not in users:
+        return render_template('error.html', message='User not found')
+    
+    if request.method == 'POST':
+        data = request.get_json()
+        password = data.get('password', '').strip()
+        name = data.get('name', '').strip()
+        role = data.get('role', 'student')
+        
+        if not name:
+            return jsonify({'error': 'Name is required'}), 400
+        
+        users[username]['name'] = name
+        users[username]['role'] = role
+        
+        if password:  # Only update password if provided
+            users[username]['password'] = password
+        
+        return jsonify({'success': True, 'message': 'User updated successfully'})
+    
+    return render_template('edit_user.html', user=users[username], username=username)
+
+# Delete user
+@app.route('/admin/users/delete/<username>', methods=['POST'])
+def delete_user(username):
+    if 'username' not in session or users[session['username']]['role'] != 'admin':
+        return jsonify({'error': 'Not authenticated'}), 401
+    
+    if username not in users:
+        return jsonify({'error': 'User not found'}), 404
+    
+    if username == session['username']:
+        return jsonify({'error': 'Cannot delete your own account'}), 400
+    
+    # Remove user data
+    del users[username]
+    if username in detection_history:
+        del detection_history[username]
+    
+    return jsonify({'success': True, 'message': 'User deleted successfully'})
+
 # --- Exam Management Routes ---
 
 # Create new exam
@@ -467,6 +576,82 @@ def list_exams():
         return redirect(url_for('login'))
     
     return render_template('admin_exams.html', exams=exams_data)
+
+# Edit exam
+@app.route('/admin/exams/edit/<exam_id>', methods=['GET', 'POST'])
+def edit_exam(exam_id):
+    if 'username' not in session or users[session['username']]['role'] != 'admin':
+        return redirect(url_for('login'))
+    
+    if exam_id not in exams_data:
+        return render_template('error.html', message='Exam not found')
+    
+    if request.method == 'POST':
+        data = request.get_json()
+        exams_data[exam_id].update({
+            'title': data['title'],
+            'description': data['description'],
+            'duration_minutes': int(data['duration_minutes']),
+            'questions': data['questions'],
+            'updated_at': datetime.now().isoformat(),
+            'updated_by': session['username']
+        })
+        save_exams_data()
+        return jsonify({'success': True, 'message': 'Exam updated successfully'})
+    
+    return render_template('edit_exam.html', exam=exams_data[exam_id], exam_id=exam_id)
+
+# Delete exam
+@app.route('/admin/exams/delete/<exam_id>', methods=['POST'])
+def delete_exam(exam_id):
+    if 'username' not in session or users[session['username']]['role'] != 'admin':
+        return jsonify({'error': 'Not authenticated'}), 401
+    
+    if exam_id not in exams_data:
+        return jsonify({'error': 'Exam not found'}), 404
+    
+    # Check if exam is in any active sessions
+    active_sessions = [s for s in exam_sessions.values() if s.get('exam_id') == exam_id and s.get('status') == 'active']
+    if active_sessions:
+        return jsonify({'error': 'Cannot delete exam with active sessions'}), 400
+    
+    # Remove exam
+    del exams_data[exam_id]
+    save_exams_data()
+    
+    return jsonify({'success': True, 'message': 'Exam deleted successfully'})
+
+# Schedule exam (set status to active)
+@app.route('/admin/exams/schedule/<exam_id>', methods=['POST'])
+def schedule_exam(exam_id):
+    if 'username' not in session or users[session['username']]['role'] != 'admin':
+        return jsonify({'error': 'Not authenticated'}), 401
+    
+    if exam_id not in exams_data:
+        return jsonify({'error': 'Exam not found'}), 404
+    
+    exams_data[exam_id]['status'] = 'active'
+    exams_data[exam_id]['scheduled_at'] = datetime.now().isoformat()
+    exams_data[exam_id]['scheduled_by'] = session['username']
+    save_exams_data()
+    
+    return jsonify({'success': True, 'message': 'Exam scheduled successfully'})
+
+# Unschedule exam (set status to draft)
+@app.route('/admin/exams/unschedule/<exam_id>', methods=['POST'])
+def unschedule_exam(exam_id):
+    if 'username' not in session or users[session['username']]['role'] != 'admin':
+        return jsonify({'error': 'Not authenticated'}), 401
+    
+    if exam_id not in exams_data:
+        return jsonify({'error': 'Exam not found'}), 404
+    
+    exams_data[exam_id]['status'] = 'draft'
+    exams_data[exam_id]['unscheduled_at'] = datetime.now().isoformat()
+    exams_data[exam_id]['unscheduled_by'] = session['username']
+    save_exams_data()
+    
+    return jsonify({'success': True, 'message': 'Exam unscheduled successfully'})
 
 # Start exam session
 @app.route('/admin/start_exam/<exam_id>', methods=['POST'])

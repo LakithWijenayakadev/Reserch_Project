@@ -4,13 +4,15 @@
     "started_at": "2025-09-06T11:30:24.045853",
     "status": "active",
     "students": [
-      "student1"
+      "student1",
+      "Sulakshi"
     ],
     "student_answers": {
       "student1": {
         "q1": "A",
         "q2": "C"
-      }
+      },
+      "Sulakshi": {}
     },
     "student_detections": {
       "student1": [
@@ -777,6 +779,80 @@
         {
           "type": "looking_away",
           "timestamp": "2025-09-06T12:48:48.764158"
+        },
+        {
+          "type": "looking_away",
+          "timestamp": "2025-09-06T13:44:59.950215"
+        },
+        {
+          "type": "looking_away",
+          "timestamp": "2025-09-06T13:45:03.928651"
+        },
+        {
+          "type": "looking_away",
+          "timestamp": "2025-09-06T13:45:13.939018"
+        },
+        {
+          "type": "blur_screen",
+          "timestamp": "2025-09-06T13:45:17.929408"
+        },
+        {
+          "type": "no_face",
+          "timestamp": "2025-09-06T13:45:23.919291"
+        },
+        {
+          "type": "blur_screen",
+          "timestamp": "2025-09-06T13:58:41.095302"
+        },
+        {
+          "type": "blur_screen",
+          "timestamp": "2025-09-06T13:58:50.702990"
+        },
+        {
+          "type": "looking_away",
+          "timestamp": "2025-09-06T13:58:52.690508"
+        },
+        {
+          "type": "looking_away",
+          "timestamp": "2025-09-06T13:59:02.693272"
+        },
+        {
+          "type": "looking_away",
+          "timestamp": "2025-09-06T13:59:06.692107"
+        },
+        {
+          "type": "no_face",
+          "timestamp": "2025-09-06T13:59:12.682185"
+        },
+        {
+          "type": "no_face",
+          "timestamp": "2025-09-06T13:59:56.669186"
+        },
+        {
+          "type": "tab_switching",
+          "timestamp": "2025-09-06T14:00:01.588522"
+        },
+        {
+          "type": "looking_away",
+          "timestamp": "2025-09-06T14:44:33.516646"
+        },
+        {
+          "type": "looking_away",
+          "timestamp": "2025-09-06T14:44:37.503787"
+        },
+        {
+          "type": "no_face",
+          "timestamp": "2025-09-06T14:44:41.487181"
+        }
+      ],
+      "Sulakshi": [
+        {
+          "type": "looking_away",
+          "timestamp": "2025-09-06T16:32:09.189732"
+        },
+        {
+          "type": "no_face",
+          "timestamp": "2025-09-06T16:32:14.666472"
         }
       ]
     }
