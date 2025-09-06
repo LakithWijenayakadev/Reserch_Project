@@ -1,0 +1,568 @@
+{
+  "session_1757138424": {
+    "exam_id": "exam_1757138388",
+    "started_at": "2025-09-06T11:30:24.045853",
+    "status": "active",
+    "students": [
+      "student1"
+    ],
+    "student_answers": {
+      "student1": {
+        "q1": "A",
+        "q2": "C"
+      }
+    },
+    "student_detections": {
+      "student1": [
+        {
+          "type": "blur_screen",
+          "timestamp": "2025-09-06T12:05:01.576757"
+        },
+        {
+          "type": "blur_screen",
+          "timestamp": "2025-09-06T12:05:03.451809"
+        },
+        {
+          "type": "blur_screen",
+          "timestamp": "2025-09-06T12:05:05.459343"
+        },
+        {
+          "type": "blur_screen",
+          "timestamp": "2025-09-06T12:05:09.456060"
+        },
+        {
+          "type": "looking_away",
+          "timestamp": "2025-09-06T12:05:15.475803"
+        },
+        {
+          "type": "looking_away",
+          "timestamp": "2025-09-06T12:05:17.454821"
+        },
+        {
+          "type": "looking_away",
+          "timestamp": "2025-09-06T12:05:23.442150"
+        },
+        {
+          "type": "blur_screen",
+          "timestamp": "2025-09-06T12:05:27.496658"
+        },
+        {
+          "type": "blur_screen",
+          "timestamp": "2025-09-06T12:05:35.453725"
+        },
+        {
+          "type": "blur_screen",
+          "timestamp": "2025-09-06T12:05:37.480551"
+        },
+        {
+          "type": "blur_screen",
+          "timestamp": "2025-09-06T12:05:39.449894"
+        },
+        {
+          "type": "no_face",
+          "timestamp": "2025-09-06T12:05:41.530081"
+        },
+        {
+          "type": "blur_screen",
+          "timestamp": "2025-09-06T12:05:43.506654"
+        },
+        {
+          "type": "tab_switching",
+          "timestamp": "2025-09-06T12:08:40.464541"
+        },
+        {
+          "type": "tab_switching",
+          "timestamp": "2025-09-06T12:08:44.871231"
+        },
+        {
+          "type": "multiple_people",
+          "timestamp": "2025-09-06T12:08:48.908046"
+        },
+        {
+          "type": "looking_away",
+          "timestamp": "2025-09-06T12:08:50.933542"
+        },
+        {
+          "type": "looking_away",
+          "timestamp": "2025-09-06T12:08:52.907986"
+        },
+        {
+          "type": "looking_away",
+          "timestamp": "2025-09-06T12:08:54.895921"
+        },
+        {
+          "type": "looking_away",
+          "timestamp": "2025-09-06T12:09:06.930348"
+        },
+        {
+          "type": "blur_screen",
+          "timestamp": "2025-09-06T12:09:10.924135"
+        },
+        {
+          "type": "blur_screen",
+          "timestamp": "2025-09-06T12:09:12.875823"
+        },
+        {
+          "type": "blur_screen",
+          "timestamp": "2025-09-06T12:09:14.876891"
+        },
+        {
+          "type": "blur_screen",
+          "timestamp": "2025-09-06T12:09:16.887506"
+        },
+        {
+          "type": "blur_screen",
+          "timestamp": "2025-09-06T12:09:19.000074"
+        },
+        {
+          "type": "blur_screen",
+          "timestamp": "2025-09-06T12:09:20.946491"
+        },
+        {
+          "type": "blur_screen",
+          "timestamp": "2025-09-06T12:09:22.964098"
+        },
+        {
+          "type": "multiple_people",
+          "timestamp": "2025-09-06T12:09:28.940021"
+        },
+        {
+          "type": "blur_screen",
+          "timestamp": "2025-09-06T12:09:30.923137"
+        },
+        {
+          "type": "multiple_people",
+          "timestamp": "2025-09-06T12:10:08.888695"
+        },
+        {
+          "type": "blur_screen",
+          "timestamp": "2025-09-06T12:10:16.928393"
+        },
+        {
+          "type": "blur_screen",
+          "timestamp": "2025-09-06T12:10:18.901473"
+        },
+        {
+          "type": "blur_screen",
+          "timestamp": "2025-09-06T12:10:20.891643"
+        },
+        {
+          "type": "no_face",
+          "timestamp": "2025-09-06T12:10:22.878499"
+        },
+        {
+          "type": "no_face",
+          "timestamp": "2025-09-06T12:10:24.904797"
+        },
+        {
+          "type": "no_face",
+          "timestamp": "2025-09-06T12:10:26.871344"
+        },
+        {
+          "type": "no_face",
+          "timestamp": "2025-09-06T12:10:28.942842"
+        },
+        {
+          "type": "no_face",
+          "timestamp": "2025-09-06T12:10:30.885005"
+        },
+        {
+          "type": "no_face",
+          "timestamp": "2025-09-06T12:10:32.872670"
+        },
+        {
+          "type": "no_face",
+          "timestamp": "2025-09-06T12:10:34.900405"
+        },
+        {
+          "type": "no_face",
+          "timestamp": "2025-09-06T12:10:36.896062"
+        },
+        {
+          "type": "blur_screen",
+          "timestamp": "2025-09-06T12:10:38.923507"
+        },
+        {
+          "type": "blur_screen",
+          "timestamp": "2025-09-06T12:10:40.866778"
+        },
+        {
+          "type": "blur_screen",
+          "timestamp": "2025-09-06T12:10:42.867133"
+        },
+        {
+          "type": "blur_screen",
+          "timestamp": "2025-09-06T12:10:44.884546"
+        },
+        {
+          "type": "no_face",
+          "timestamp": "2025-09-06T12:10:46.874996"
+        },
+        {
+          "type": "no_face",
+          "timestamp": "2025-09-06T12:10:48.896667"
+        },
+        {
+          "type": "tab_switching",
+          "timestamp": "2025-09-06T12:11:00.537736"
+        },
+        {
+          "type": "looking_away",
+          "timestamp": "2025-09-06T12:11:10.156848"
+        },
+        {
+          "type": "multiple_people",
+          "timestamp": "2025-09-06T12:11:16.250298"
+        },
+        {
+          "type": "multiple_people",
+          "timestamp": "2025-09-06T12:11:18.251766"
+        },
+        {
+          "type": "looking_away",
+          "timestamp": "2025-09-06T12:11:20.218696"
+        },
+        {
+          "type": "looking_away",
+          "timestamp": "2025-09-06T12:11:22.250951"
+        },
+        {
+          "type": "blur_screen",
+          "timestamp": "2025-09-06T12:11:28.226661"
+        },
+        {
+          "type": "blur_screen",
+          "timestamp": "2025-09-06T12:11:30.166169"
+        },
+        {
+          "type": "blur_screen",
+          "timestamp": "2025-09-06T12:11:32.188457"
+        },
+        {
+          "type": "no_face",
+          "timestamp": "2025-09-06T12:11:34.204238"
+        },
+        {
+          "type": "no_face",
+          "timestamp": "2025-09-06T12:11:36.150008"
+        },
+        {
+          "type": "blur_screen",
+          "timestamp": "2025-09-06T12:11:38.243716"
+        },
+        {
+          "type": "looking_away",
+          "timestamp": "2025-09-06T12:12:10.142203"
+        },
+        {
+          "type": "multiple_people",
+          "timestamp": "2025-09-06T12:12:45.822404"
+        },
+        {
+          "type": "multiple_people",
+          "timestamp": "2025-09-06T12:12:53.168771"
+        },
+        {
+          "type": "multiple_people",
+          "timestamp": "2025-09-06T12:13:01.167990"
+        },
+        {
+          "type": "multiple_people",
+          "timestamp": "2025-09-06T12:13:03.224712"
+        },
+        {
+          "type": "multiple_people",
+          "timestamp": "2025-09-06T12:13:11.177157"
+        },
+        {
+          "type": "tab_switching",
+          "timestamp": "2025-09-06T12:13:12.001561"
+        },
+        {
+          "type": "blur_screen",
+          "timestamp": "2025-09-06T12:13:17.193935"
+        },
+        {
+          "type": "looking_away",
+          "timestamp": "2025-09-06T12:13:53.173158"
+        },
+        {
+          "type": "multiple_people",
+          "timestamp": "2025-09-06T12:13:57.160713"
+        },
+        {
+          "type": "tab_switching",
+          "timestamp": "2025-09-06T12:13:59.585006"
+        },
+        {
+          "type": "multiple_people",
+          "timestamp": "2025-09-06T12:14:03.198904"
+        },
+        {
+          "type": "looking_away",
+          "timestamp": "2025-09-06T12:15:27.176293"
+        },
+        {
+          "type": "tab_switching",
+          "timestamp": "2025-09-06T12:15:35.149408"
+        },
+        {
+          "type": "tab_switching",
+          "timestamp": "2025-09-06T12:15:45.202711"
+        },
+        {
+          "type": "tab_switching",
+          "timestamp": "2025-09-06T12:16:08.739858"
+        },
+        {
+          "type": "looking_away",
+          "timestamp": "2025-09-06T12:16:49.170897"
+        },
+        {
+          "type": "looking_away",
+          "timestamp": "2025-09-06T12:17:13.353442"
+        },
+        {
+          "type": "looking_away",
+          "timestamp": "2025-09-06T12:17:19.375585"
+        },
+        {
+          "type": "looking_away",
+          "timestamp": "2025-09-06T12:17:25.338031"
+        },
+        {
+          "type": "multiple_people",
+          "timestamp": "2025-09-06T12:17:43.341827"
+        },
+        {
+          "type": "looking_away",
+          "timestamp": "2025-09-06T12:17:51.349147"
+        },
+        {
+          "type": "multiple_people",
+          "timestamp": "2025-09-06T12:18:17.518530"
+        },
+        {
+          "type": "multiple_people",
+          "timestamp": "2025-09-06T12:18:35.321852"
+        },
+        {
+          "type": "multiple_people",
+          "timestamp": "2025-09-06T12:20:45.447701"
+        },
+        {
+          "type": "multiple_people",
+          "timestamp": "2025-09-06T12:20:47.500893"
+        },
+        {
+          "type": "multiple_people",
+          "timestamp": "2025-09-06T12:20:53.474227"
+        },
+        {
+          "type": "looking_away",
+          "timestamp": "2025-09-06T12:21:03.426101"
+        },
+        {
+          "type": "multiple_people",
+          "timestamp": "2025-09-06T12:21:27.703690"
+        },
+        {
+          "type": "multiple_people",
+          "timestamp": "2025-09-06T12:21:37.766084"
+        },
+        {
+          "type": "multiple_people",
+          "timestamp": "2025-09-06T12:21:43.741245"
+        },
+        {
+          "type": "multiple_people",
+          "timestamp": "2025-09-06T12:22:01.779904"
+        },
+        {
+          "type": "multiple_people",
+          "timestamp": "2025-09-06T12:22:05.741274"
+        },
+        {
+          "type": "tab_switching",
+          "timestamp": "2025-09-06T12:22:55.044257"
+        },
+        {
+          "type": "blur_screen",
+          "timestamp": "2025-09-06T12:22:59.631792"
+        },
+        {
+          "type": "blur_screen",
+          "timestamp": "2025-09-06T12:23:01.527736"
+        },
+        {
+          "type": "blur_screen",
+          "timestamp": "2025-09-06T12:23:03.511202"
+        },
+        {
+          "type": "blur_screen",
+          "timestamp": "2025-09-06T12:23:05.626289"
+        },
+        {
+          "type": "looking_away",
+          "timestamp": "2025-09-06T12:24:33.421859"
+        },
+        {
+          "type": "looking_away",
+          "timestamp": "2025-09-06T12:24:45.469756"
+        },
+        {
+          "type": "looking_away",
+          "timestamp": "2025-09-06T12:24:47.446960"
+        },
+        {
+          "type": "blur_screen",
+          "timestamp": "2025-09-06T12:24:57.462266"
+        },
+        {
+          "type": "blur_screen",
+          "timestamp": "2025-09-06T12:24:59.399671"
+        },
+        {
+          "type": "blur_screen",
+          "timestamp": "2025-09-06T12:25:01.429942"
+        },
+        {
+          "type": "no_face",
+          "timestamp": "2025-09-06T12:25:03.429141"
+        },
+        {
+          "type": "blur_screen",
+          "timestamp": "2025-09-06T12:25:47.746028"
+        },
+        {
+          "type": "blur_screen",
+          "timestamp": "2025-09-06T12:25:49.804500"
+        },
+        {
+          "type": "blur_screen",
+          "timestamp": "2025-09-06T12:25:51.818350"
+        },
+        {
+          "type": "blur_screen",
+          "timestamp": "2025-09-06T12:25:53.823828"
+        },
+        {
+          "type": "no_face",
+          "timestamp": "2025-09-06T12:25:55.808563"
+        },
+        {
+          "type": "no_face",
+          "timestamp": "2025-09-06T12:25:57.766093"
+        },
+        {
+          "type": "no_face",
+          "timestamp": "2025-09-06T12:25:59.788376"
+        },
+        {
+          "type": "no_face",
+          "timestamp": "2025-09-06T12:26:01.776275"
+        },
+        {
+          "type": "blur_screen",
+          "timestamp": "2025-09-06T12:26:03.844317"
+        },
+        {
+          "type": "looking_away",
+          "timestamp": "2025-09-06T12:27:03.788102"
+        },
+        {
+          "type": "multiple_people",
+          "timestamp": "2025-09-06T12:27:17.777447"
+        },
+        {
+          "type": "multiple_people",
+          "timestamp": "2025-09-06T12:27:19.737864"
+        },
+        {
+          "type": "multiple_people",
+          "timestamp": "2025-09-06T12:27:21.765843"
+        },
+        {
+          "type": "multiple_people",
+          "timestamp": "2025-09-06T12:27:25.788406"
+        },
+        {
+          "type": "multiple_people",
+          "timestamp": "2025-09-06T12:27:31.792906"
+        },
+        {
+          "type": "looking_away",
+          "timestamp": "2025-09-06T12:27:59.720978"
+        },
+        {
+          "type": "multiple_people",
+          "timestamp": "2025-09-06T12:28:01.799934"
+        },
+        {
+          "type": "multiple_people",
+          "timestamp": "2025-09-06T12:28:03.765580"
+        },
+        {
+          "type": "multiple_people",
+          "timestamp": "2025-09-06T12:28:05.717580"
+        },
+        {
+          "type": "multiple_people",
+          "timestamp": "2025-09-06T12:28:07.824165"
+        },
+        {
+          "type": "multiple_people",
+          "timestamp": "2025-09-06T12:35:18.051869"
+        },
+        {
+          "type": "looking_away",
+          "timestamp": "2025-09-06T12:35:27.931317"
+        },
+        {
+          "type": "multiple_people",
+          "timestamp": "2025-09-06T12:35:36.096168"
+        },
+        {
+          "type": "tab_switching",
+          "timestamp": "2025-09-06T12:35:45.352084"
+        },
+        {
+          "type": "multiple_people",
+          "timestamp": "2025-09-06T12:35:50.147675"
+        },
+        {
+          "type": "multiple_people",
+          "timestamp": "2025-09-06T12:35:52.112566"
+        },
+        {
+          "type": "multiple_people",
+          "timestamp": "2025-09-06T12:35:54.165287"
+        },
+        {
+          "type": "multiple_people",
+          "timestamp": "2025-09-06T12:36:37.080486"
+        },
+        {
+          "type": "blur_screen",
+          "timestamp": "2025-09-06T12:36:47.024023"
+        },
+        {
+          "type": "blur_screen",
+          "timestamp": "2025-09-06T12:36:49.093552"
+        },
+        {
+          "type": "blur_screen",
+          "timestamp": "2025-09-06T12:36:51.082534"
+        },
+        {
+          "type": "no_face",
+          "timestamp": "2025-09-06T12:36:53.064033"
+        },
+        {
+          "type": "no_face",
+          "timestamp": "2025-09-06T12:36:55.023632"
+        }
+      ]
+    }
+  }
+}
