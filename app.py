@@ -162,19 +162,16 @@ def analyze_frame(image_bgr):
 
     blur = laplacian_variance(gray)
     
-    # Use more lenient face detection parameters to catch partial faces
-    faces  = face_cascade.detectMultiScale(gray, 1.1, 3, minSize=(30, 30))
-    profs  = profile_cascade.detectMultiScale(gray, 1.1, 3, minSize=(30, 30))
+    # STRICT face detection for multiple people - only use frontal faces for multiple detection
+    # Use very strict parameters to avoid false positives
+    faces = face_cascade.detectMultiScale(gray, 1.3, 8, minSize=(80, 80), maxSize=(300, 300))
     
-    # Also try detecting faces at different scales for better coverage
-    faces_alt = face_cascade.detectMultiScale(gray, 1.05, 2, minSize=(20, 20))
-    profs_alt = profile_cascade.detectMultiScale(gray, 1.05, 2, minSize=(20, 20))
-    
-    # Combine all detections
-    allf = list(faces) + list(profs) + list(faces_alt) + list(profs_alt)
+    # For multiple people detection, ONLY use frontal faces (no profiles)
+    # Profiles will only be used later for "looking away" detection
+    allf = list(faces)
     filtered_faces = []
     
-    # Remove overlapping face detections (within 40% overlap - more lenient)
+    # VERY STRICT overlap filtering - remove any faces that are even slightly overlapping
     for i, face1 in enumerate(allf):
         is_duplicate = False
         for face2 in filtered_faces:
@@ -188,11 +185,27 @@ def analyze_frame(image_bgr):
             face1_area = w1 * h1
             face2_area = w2 * h2
             
-            if overlap_area > 0.4 * min(face1_area, face2_area):
+            # Much stricter overlap threshold - remove if any overlap > 10%
+            if overlap_area > 0.1 * min(face1_area, face2_area):
+                is_duplicate = True
+                break
+            
+            # Also check distance between centers - faces must be well separated
+            center1_x, center1_y = x1 + w1//2, y1 + h1//2
+            center2_x, center2_y = x2 + w2//2, y2 + h2//2
+            distance = ((center1_x - center2_x)**2 + (center1_y - center2_y)**2)**0.5
+            min_distance = max(w1, h1, w2, h2) * 1.2  # Faces must be at least 1.2x face size apart
+            
+            if distance < min_distance:
                 is_duplicate = True
                 break
         
         if not is_duplicate:
+            # Additional quality check - reject faces that are too small, too large, or near edges
+            x, y, w, h = face1
+            if (w < 80 or h < 80 or w > 300 or h > 300 or 
+                x < 20 or y < 20 or x + w > gray.shape[1] - 20 or y + h > gray.shape[0] - 20):
+                continue
             filtered_faces.append(face1)
     
     fcnt = len(filtered_faces)
@@ -234,11 +247,23 @@ def analyze_frame(image_bgr):
             decision = 'no_face'
             print(f"No face detected - person absent: brightness={mean_brightness:.1f}, contrast={std_brightness:.1f}, duration={absence_duration:.1f}s")
         elif movement_detected:
-            decision = 'looking_away'
-            print(f"No face but person moved away: brightness={mean_brightness:.1f}, movement={movement_score:.1f}")
+            # Check if we can detect profile faces (for looking away detection)
+            profs = profile_cascade.detectMultiScale(gray, 1.1, 3, minSize=(30, 30))
+            if len(profs) > 0:
+                decision = 'looking_away'
+                print(f"No face but profile detected (looking away): brightness={mean_brightness:.1f}, movement={movement_score:.1f}")
+            else:
+                decision = 'looking_away'
+                print(f"No face but person moved away: brightness={mean_brightness:.1f}, movement={movement_score:.1f}")
         else:
-            decision = 'looking_away'
-            print(f"No face but looking away detected: brightness={mean_brightness:.1f}, contrast={std_brightness:.1f}")
+            # Check if we can detect profile faces (for looking away detection)
+            profs = profile_cascade.detectMultiScale(gray, 1.1, 3, minSize=(30, 30))
+            if len(profs) > 0:
+                decision = 'looking_away'
+                print(f"No frontal face but profile detected (looking away): brightness={mean_brightness:.1f}, contrast={std_brightness:.1f}")
+            else:
+                decision = 'looking_away'
+                print(f"No face but looking away detected: brightness={mean_brightness:.1f}, contrast={std_brightness:.1f}")
     elif fcnt >= 2:
         # Face detected - reset absence tracking
         last_face_detected = current_time

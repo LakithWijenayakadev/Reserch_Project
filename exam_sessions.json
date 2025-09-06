@@ -689,6 +689,94 @@
         {
           "type": "tab_switching",
           "timestamp": "2025-09-06T12:43:21.433612"
+        },
+        {
+          "type": "multiple_people",
+          "timestamp": "2025-09-06T12:43:35.399992"
+        },
+        {
+          "type": "multiple_people",
+          "timestamp": "2025-09-06T12:43:41.393047"
+        },
+        {
+          "type": "multiple_people",
+          "timestamp": "2025-09-06T12:44:07.405556"
+        },
+        {
+          "type": "multiple_people",
+          "timestamp": "2025-09-06T12:44:41.374866"
+        },
+        {
+          "type": "blur_screen",
+          "timestamp": "2025-09-06T12:44:59.385539"
+        },
+        {
+          "type": "multiple_people",
+          "timestamp": "2025-09-06T12:45:47.425860"
+        },
+        {
+          "type": "multiple_people",
+          "timestamp": "2025-09-06T12:45:51.397881"
+        },
+        {
+          "type": "looking_away",
+          "timestamp": "2025-09-06T12:46:42.772935"
+        },
+        {
+          "type": "looking_away",
+          "timestamp": "2025-09-06T12:47:02.763736"
+        },
+        {
+          "type": "no_face",
+          "timestamp": "2025-09-06T12:47:08.722475"
+        },
+        {
+          "type": "multiple_people",
+          "timestamp": "2025-09-06T12:47:14.743329"
+        },
+        {
+          "type": "multiple_people",
+          "timestamp": "2025-09-06T12:47:30.725449"
+        },
+        {
+          "type": "multiple_people",
+          "timestamp": "2025-09-06T12:47:40.727027"
+        },
+        {
+          "type": "looking_away",
+          "timestamp": "2025-09-06T12:47:42.769834"
+        },
+        {
+          "type": "multiple_people",
+          "timestamp": "2025-09-06T12:47:46.717929"
+        },
+        {
+          "type": "looking_away",
+          "timestamp": "2025-09-06T12:47:56.744398"
+        },
+        {
+          "type": "multiple_people",
+          "timestamp": "2025-09-06T12:48:10.713249"
+        },
+        {
+          "type": "multiple_people",
+          "timestamp": "2025-09-06T12:48:20.745000"
+        },
+        {
+          "type": "looking_away",
+          "timestamp": "2025-09-06T12:48:26.774310"
+        },
+        {
+          "type": "no_face",
+          "timestamp": "2025-09-06T12:48:32.715157"
+        },
+        {
+          "type": "looking_away",
+          "timestamp": "2025-09-06T12:48:44.764052"
+        },
+        {
+          "type": "looking_away",
+          "timestamp": "2025-09-06T12:48:48.764158"
         }
       ]
     }
